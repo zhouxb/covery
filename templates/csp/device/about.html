@@ -1,0 +1,26 @@
+{% macro message(name, value) -%}
+<tr>
+    <td class=span2>
+        <span class="label label-info">{{ name }}</span>
+    </td>
+    <td>
+        <code>{{ value }}</code>
+    </td>
+</tr>
+{%- endmacro %}
+
+{% extends 'nav.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h1>CSP部门<small>设备整体情况</small></h1>
+</div>
+<table class="table table-bordered table-striped">
+    <tbody>
+        {{ message("总数", cop+gsp+ssr) }}
+        {{ message("COP", cop) }}
+        {{ message("GSP", gsp) }}
+        {{ message("SSR", ssr) }}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,672 @@
+-- MySQL dump 10.13  Distrib 5.1.49, for debian-linux-gnu (i686)
+--
+-- Host: localhost    Database: discovery
+-- ------------------------------------------------------
+-- Server version	5.1.49-1ubuntu8.1-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `group_id` (`group_id`,`permission_id`),
+  KEY `auth_group_permissions_425ae3c4` (`group_id`),
+  KEY `auth_group_permissions_1e014c8f` (`permission_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_message`
+--
+
+DROP TABLE IF EXISTS `auth_message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `message` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `auth_message_403f60f` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_message`
+--
+
+LOCK TABLES `auth_message` WRITE;
+/*!40000 ALTER TABLE `auth_message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `content_type_id` int(11) NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `content_type_id` (`content_type_id`,`codename`),
+  KEY `auth_permission_1bb8f392` (`content_type_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add permission',1,'add_permission'),(2,'Can change permission',1,'change_permission'),(3,'Can delete permission',1,'delete_permission'),(4,'Can add group',2,'add_group'),(5,'Can change group',2,'change_group'),(6,'Can delete group',2,'delete_group'),(7,'Can add user',3,'add_user'),(8,'Can change user',3,'change_user'),(9,'Can delete user',3,'delete_user'),(10,'Can add message',4,'add_message'),(11,'Can change message',4,'change_message'),(12,'Can delete message',4,'delete_message'),(13,'Can add content type',5,'add_contenttype'),(14,'Can change content type',5,'change_contenttype'),(15,'Can delete content type',5,'delete_contenttype'),(16,'Can add session',6,'add_session'),(17,'Can change session',6,'change_session'),(18,'Can delete session',6,'delete_session'),(19,'Can add site',7,'add_site'),(20,'Can change site',7,'change_site'),(21,'Can delete site',7,'delete_site'),(22,'Can add task meta',8,'add_taskmeta'),(23,'Can change task meta',8,'change_taskmeta'),(24,'Can delete task meta',8,'delete_taskmeta'),(25,'Can add taskset meta',9,'add_tasksetmeta'),(26,'Can change taskset meta',9,'change_tasksetmeta'),(27,'Can delete taskset meta',9,'delete_tasksetmeta'),(28,'Can add interval',10,'add_intervalschedule'),(29,'Can change interval',10,'change_intervalschedule'),(30,'Can delete interval',10,'delete_intervalschedule'),(31,'Can add crontab',11,'add_crontabschedule'),(32,'Can change crontab',11,'change_crontabschedule'),(33,'Can delete crontab',11,'delete_crontabschedule'),(34,'Can add periodic tasks',12,'add_periodictasks'),(35,'Can change periodic tasks',12,'change_periodictasks'),(36,'Can delete periodic tasks',12,'delete_periodictasks'),(37,'Can add periodic task',13,'add_periodictask'),(38,'Can change periodic task',13,'change_periodictask'),(39,'Can delete periodic task',13,'delete_periodictask'),(40,'Can add worker',14,'add_workerstate'),(41,'Can change worker',14,'change_workerstate'),(42,'Can delete worker',14,'delete_workerstate'),(43,'Can add task',15,'add_taskstate'),(44,'Can change task',15,'change_taskstate'),(45,'Can delete task',15,'delete_taskstate'),(46,'Can add api access',16,'add_apiaccess'),(47,'Can change api access',16,'change_apiaccess'),(48,'Can delete api access',16,'delete_apiaccess'),(49,'Can add api key',17,'add_apikey'),(50,'Can change api key',17,'change_apikey'),(51,'Can delete api key',17,'delete_apikey'),(52,'Can add entry',18,'add_entry'),(53,'Can change entry',18,'change_entry'),(54,'Can delete entry',18,'delete_entry'),(55,'Can add migration history',19,'add_migrationhistory'),(56,'Can change migration history',19,'change_migrationhistory'),(57,'Can delete migration history',19,'delete_migrationhistory'),(58,'Can add device',20,'add_device'),(59,'Can change device',20,'change_device'),(60,'Can delete device',20,'delete_device');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user`
+--
+
+DROP TABLE IF EXISTS `auth_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(30) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `email` varchar(75) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `last_login` datetime NOT NULL,
+  `date_joined` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user`
+--
+
+LOCK TABLES `auth_user` WRITE;
+/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+INSERT INTO `auth_user` VALUES (1,'admin','','','admin@cc.com','sha1$78fb9$cad7560abfb129c91d5c9d10954cd6d801a8006d',1,1,1,'2012-01-11 01:52:15','2012-01-11 01:52:15');
+/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_groups`
+--
+
+DROP TABLE IF EXISTS `auth_user_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`,`group_id`),
+  KEY `auth_user_groups_403f60f` (`user_id`),
+  KEY `auth_user_groups_425ae3c4` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_groups`
+--
+
+LOCK TABLES `auth_user_groups` WRITE;
+/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_user_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_user_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_user_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`,`permission_id`),
+  KEY `auth_user_user_permissions_403f60f` (`user_id`),
+  KEY `auth_user_user_permissions_1e014c8f` (`permission_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_user_permissions`
+--
+
+LOCK TABLES `auth_user_user_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `celery_taskmeta`
+--
+
+DROP TABLE IF EXISTS `celery_taskmeta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `celery_taskmeta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` varchar(255) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `result` longtext,
+  `date_done` datetime NOT NULL,
+  `traceback` longtext,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `task_id` (`task_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `celery_taskmeta`
+--
+
+LOCK TABLES `celery_taskmeta` WRITE;
+/*!40000 ALTER TABLE `celery_taskmeta` DISABLE KEYS */;
+INSERT INTO `celery_taskmeta` VALUES (1,'94b01088-b363-4b4c-a5a4-ad54b4b4f02b','SUCCESS','gAJLCC4=','2012-01-11 04:10:49',NULL);
+/*!40000 ALTER TABLE `celery_taskmeta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `celery_tasksetmeta`
+--
+
+DROP TABLE IF EXISTS `celery_tasksetmeta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `celery_tasksetmeta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `taskset_id` varchar(255) NOT NULL,
+  `result` longtext NOT NULL,
+  `date_done` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `taskset_id` (`taskset_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `celery_tasksetmeta`
+--
+
+LOCK TABLES `celery_tasksetmeta` WRITE;
+/*!40000 ALTER TABLE `celery_tasksetmeta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `celery_tasksetmeta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `csp_device`
+--
+
+DROP TABLE IF EXISTS `csp_device`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `csp_device` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group` varchar(200) NOT NULL,
+  `owner` varchar(200) NOT NULL,
+  `intranet_ip` char(15) NOT NULL,
+  `external_ip` char(15) NOT NULL,
+  `sn` varchar(200) NOT NULL,
+  `type` varchar(200) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  `os` varchar(200) NOT NULL,
+  `safe` varchar(200) NOT NULL,
+  `location` varchar(200) NOT NULL,
+  `remark` varchar(200) NOT NULL,
+  `info` varchar(1000) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `csp_device`
+--
+
+LOCK TABLES `csp_device` WRITE;
+/*!40000 ALTER TABLE `csp_device` DISABLE KEYS */;
+INSERT INTO `csp_device` VALUES (59,'SSR','李健松','192.168.100.171','','C1-ST-9009','应用','文档','Windows','杀软','5号机房D9柜','坏 ','SSR|李健松|192.168.100.171||C1-ST-9009|应用|文档|Windows|杀软|5号机房D9柜|坏 '),(60,'SSR','李孟','192.168.100.182','','C1-ST-3112','开发机器','FDNS开发机,SSR文件发布服务器','Linux','','5号机房D10柜','坏','SSR|李孟|192.168.100.182||C1-ST-3112|开发机器|FDNS开发机,SSR文件发布服务器|Linux||5号机房D10柜|坏'),(9,'COP','王兴华 ','192.168.100.176','61.135.208.24','C1-ST-9005 ','COP 升级服务器（update.cop.chinacache.com）  ','COP 升级服务器\r\n（update.cop.chinacache.com）','CentOS 4.5  ','fail2ban','5号机房G10柜 ','曙光 1U 机器','COP王兴华 192.168.100.17661.135.208.24C1-ST-9005 COP 升级服务器（update.cop.chinacache.com）  COP 升级服务器\r\n（update.cop.chinacache.com）CentOS 4.5  fail2ban5号机房G10柜 曙光 1U 机器'),(10,'COP','王兴华 ','192.168.100.157','61.135.208.20','C1-ST-2006 ','在线设备 ','COP 下载服务器\r\n（download.cop.chinacache.com）','RHEL AS 4.2','fail2ban ','5号机房G9柜','','COP王兴华 192.168.100.15761.135.208.20C1-ST-2006 在线设备 COP 下载服务器\r\n（download.cop.chinacache.com）RHEL AS 4.2fail2ban 5号机房G9柜'),(11,'GSP','姚鑫 ','192.168.100.134','','824QZ1X ','开发','姚鑫开发 ','CentOS 5.5 x86_64','','电信机房3-13机柜','','GSP姚鑫 192.168.100.134824QZ1X 开发姚鑫开发 CentOS 5.5 x86_64电信机房3-13机柜'),(12,'COP','王兴华','192.168.100.158','61.135.208.27','C1-ST-1736 ','在线设备 ','SVN Server\r\nCopUpdate 备份机','RHEL AS 4.2 ','','5号机房G9柜 ','','COP王兴华192.168.100.15861.135.208.27C1-ST-1736 在线设备 SVN Server\r\nCopUpdate 备份机RHEL AS 4.2 5号机房G9柜 '),(13,'COP','王兴华','192.168.100.156','','C1-ST-2002 ','在线设备','RHEL5 编译环境','CentOS 5.3 ','fail2ban','5号机房D10柜','','COP王兴华192.168.100.156C1-ST-2002 在线设备RHEL5 编译环境CentOS 5.3 fail2ban5号机房D10柜'),(14,'COP','王兴华','192.168.100.149','','','在线设备 ','CCSSH1 ','CentOS 5.3 ','iptables','5号机房C10柜 ','','COP王兴华192.168.100.149 在线设备 CCSSH1 CentOS 5.3 iptables5号机房C10柜 '),(15,'GSP','张华','192.168.100.137','','1Z3QZ1X ','开发 ','张华开发 ','CentOS 5.5 x86_64 ','','电信机房3-13机柜','','GSP张华192.168.100.1371Z3QZ1X 开发 张华开发 CentOS 5.5 x86_64 电信机房3-13机柜'),(16,'COP','王兴华','192.168.10.171','','','在线设备 ','CCSSH2','CentOS 5.4 ','iptables','  二楼机房  ','','COP王兴华192.168.10.171在线设备 CCSSH2CentOS 5.4 iptables  二楼机房  '),(17,'GSP','黄勇','192.168.100.135','','7H4QZ1X ','开发','黄勇研发 ','RHEL AS 4 ','','电信机房3-13机柜','','GSP黄勇192.168.100.1357H4QZ1X 开发黄勇研发 RHEL AS 4 电信机房3-13机柜'),(18,'COP','王兴华','223.202.0.50','','','在线设备 ','日志处理1 ','CentOS 5.5 ','iptables','上地硅谷机房 IDC-GuiGu-D01-3750-2 F05 1R 3 口','联想R520G7 2U 赵永生 ','COP王兴华223.202.0.50 在线设备 日志处理1 CentOS 5.5 iptables上地硅谷机房 IDC-GuiGu-D01-3750-2 F05 1R 3 口联想R520G7 2U 赵永生 '),(19,'COP','王兴华','223.202.0.51','','','在线设备 ','日志处理2','CentOS 5.5','iptables','上地硅谷机房 IDC-GuiGu-D01-3750-2 F05 1R 4 口','联想R520G7 2U 赵永生','COP王兴华223.202.0.51 在线设备 日志处理2CentOS 5.5iptables上地硅谷机房 IDC-GuiGu-D01-3750-2 F05 1R 4 口联想R520G7 2U 赵永生'),(20,'GSP','黄龙 ','192.168.100.111','','','开发','黄龙开发 ','RedHat AS4U5 i686 ','','5号机房D9柜 ','虚拟机','GSP黄龙 192.168.100.111开发黄龙开发 RedHat AS4U5 i686 5号机房D9柜 虚拟机'),(21,'COP','王兴华','192.168.100.139','61.135.207.203','','在线设备','多功能系统（主）','','hosts.allow','二楼机房','','COP王兴华192.168.100.13961.135.207.203在线设备多功能系统（主）hosts.allow二楼机房'),(23,'GSP','栗伟','192.168.100.185','','C1-ST-8068','开发 ','栗伟研发 ','Linux ','','5号机房D9柜 ','','GSP栗伟192.168.100.185C1-ST-8068开发 栗伟研发 Linux 5号机房D9柜 '),(24,'COP','王兴华','192.168.10.170s','58.68.140.6','','在线设备','多功能系统（备） ','','hosts.allow','二楼机房','','COP王兴华192.168.10.170s58.68.140.6在线设备多功能系统（备） hosts.allow二楼机房'),(25,'COP','王兴华','192.168.10.170s','58.68.140.6','','在线设备','多功能系统（备） ','','hosts.allow','二楼机房','','COP王兴华192.168.10.170s58.68.140.6在线设备多功能系统（备） hosts.allow二楼机房'),(26,'GSP','孙鹤 ','192.168.100.186','','C1-ST-2859 ','开发 ','孙鹤开发','Linux','','5号机房D10柜 ','','GSP孙鹤 192.168.100.186C1-ST-2859 开发 孙鹤开发Linux5号机房D10柜 '),(27,'COP','王兴华','','211.147.212.253','','在线设备 ','LinkPath 图片的服务器 ','Linux','Iptables','兆维','','COP王兴华211.147.212.253在线设备 LinkPath 图片的服务器 LinuxIptables兆维'),(28,'COP','赵伟 ','192.168.100.155','','C1-ST-2005 ',' 开发机 ','赵伟开发机 ','CentOS 4.8 ','','5 号机房 D9 柜','','COP赵伟 192.168.100.155C1-ST-2005  开发机 赵伟开发机 CentOS 4.8 5 号机房 D9 柜'),(29,'GSP','田江波 	','192.168.100.187','','C1-ST-2870','开发','田江波开发 ','Linux ','','5号机房D8柜','','GSP田江波 	192.168.100.187C1-ST-2870开发田江波开发 Linux 5号机房D8柜'),(30,'COP','赵伟','192.168.100.121','','','测试机','FC 测试服务器','RHAS 4.5','','电信3-13机柜','','COP赵伟192.168.100.121测试机FC 测试服务器RHAS 4.5电信3-13机柜'),(31,'COP','赵伟','192.168.100.122','','','测试机','4 位内网测试机\r\n(从张志刚处借用)','CentOS 5.5','','电信 3-13 机柜 ','','COP赵伟192.168.100.122测试机4 位内网测试机\r\n(从张志刚处借用)CentOS 5.5电信 3-13 机柜 '),(32,'GSP','赵宏志','192.168.100.189','','C1-ST-2600 ','开发','赵宏志开发 ','linux ','','5号机房D9柜 ','','GSP赵宏志192.168.100.189 C1-ST-2600 开发赵宏志开发 linux 5号机房D9柜 '),(33,'COP','赵伟','','202.108.251.226','','测试机','64 位公网测试机\r\n(从张志刚处借用) ','CentOS 5.5','','兆维 5 号机房，H5 机柜 ','','COP赵伟202.108.251.226(bond0)202.108.251.214(eth0)测试机64 位公网测试机\r\n(从张志刚处借用) CentOS 5.5兆维 5 号机房，H5 机柜 '),(34,'GSP','岳强','192.168.100.191','','C1-ST-1500','开发 ','岳强开发 ','linux ','','5号机房D10柜 ','','GSP岳强192.168.100.191 C1-ST-1500开发 岳强开发 linux 5号机房D10柜 '),(35,'COP','赵伟','','58.68.151.10','','开发机','4 位开发机1 ','CentOS 5.5','Iptables ','','','COP赵伟58.68.151.10开发机4 位开发机1 CentOS 5.5Iptables '),(36,'COP','赵伟','','58.68.151.11','','开发机','64 位开发机2','CentOS 5.5','Iptables ','','','COP赵伟58.68.151.11 开发机64 位开发机2CentOS 5.5Iptables '),(37,'GSP','黄超生','192.168.100.193','','C1-ST-7829 ','开发','黄超生开发','linux','','5号机房D8柜','','GSP黄超生192.168.100.193C1-ST-7829 开发黄超生开发linux5号机房D8柜'),(38,'GSP','陈琪','192.168.100.113','','','开发','开发机 ','RedHat AS4U5 i686','','5号机房D9柜 ','虚拟机 ','GSP陈琪192.168.100.113开发开发机 RedHat AS4U5 i6865号机房D9柜 虚拟机 '),(39,'GSP','栗伟 ','192.168.100.184','','C1-ST-4177','测试','只做客户端角色 ','CentOS5.4 64位 ','','5号机房D9柜 ','虚拟机主机','GSP栗伟 192.168.100.184C1-ST-4177测试只做客户端角色 CentOS5.4 64位 5号机房D9柜 虚拟机主机'),(40,'GSP','刘研 ','192.168.100.192','','C1-ST-7762 ','测试 ','刘妍测试 ','linux ','','5号机房D8柜 ','','GSP刘研 192.168.100.192 C1-ST-7762 测试 刘妍测试 linux 5号机房D8柜 '),(41,'GSP','张蕴锋 	','192.168.100.188','','C1-ST-1886 ','测试 ','张蕴锋测试 ','Linux','','5号机房D8柜','','GSP张蕴锋 	192.168.100.188C1-ST-1886 测试 张蕴锋测试 Linux5号机房D8柜'),(42,'GSP','钟东','192.168.100.166','','C1-ST-10070 ','测试','	钟东测试 ','Linux','','5号机房D10柜','坏了 ','GSP钟东192.168.100.166 C1-ST-10070 测试	钟东测试 Linux5号机房D10柜坏了 '),(43,'GSP','栗伟','192.168.100.114','','','测试','	公用测试 ','RedHat AS4U5 i686','','5号机房D9柜','虚拟机','GSP栗伟192.168.100.114测试	公用测试 RedHat AS4U5 i6865号机房D9柜虚拟机'),(44,'GSP','栗伟','192.168.100.112','','','测试','公用测试','RedHat AS4U5 i686','','5号机房D9柜','虚拟机','GSP栗伟192.168.100.112测试公用测试RedHat AS4U5 i6865号机房D9柜虚拟机'),(58,'SSR','李健松','192.168.100.179','','C1-ST-10018','在线设备','备系统的LLC程序 FDNS测试机','Linux','','5号机房D10柜','flexidns','SSR|李健松|192.168.100.179||C1-ST-10018|在线设备|备系统的LLC程序 FDNS测试机|Linux||5号机房D10柜|flexidns'),(61,'SSR','李孟','192.168.100.169','','C1-ST-8977','测试机器','网卡测试','D10Linux','','5号机房D9柜','','SSR|李孟|192.168.100.169||C1-ST-8977|测试机器|网卡测试|D10Linux||5号机房D9柜|'),(62,'SSR','李孟','192.168.100.138','','C1-ST-8977','开发机器','FDNS开发机器','Linux','','','','SSR|李孟|192.168.100.138||C1-ST-8977|开发机器|FDNS开发机器|Linux|||'),(63,'SSR','陈奇','192.168.100.172','58.68.140.21','C1-ST-8970','在线设备','168LDNS智能监控，FDNS 测试机器','Linux','Iptables','5号机房D9柜','','SSR|陈奇|192.168.100.172|58.68.140.21|C1-ST-8970|在线设备|168LDNS智能监控，FDNS 测试机器|Linux|Iptables|5号机房D9柜|'),(64,'SSR','陈奇','192.168.100.161','','C1-ST-1877','稳定测试环境机器','内部测试FDNS的LDNS','Linux','','5号机房D10柜','','SSR|陈奇|192.168.100.161||C1-ST-1877|稳定测试环境机器|内部测试FDNS的LDNS|Linux||5号机房D10柜|'),(65,'SSR','陈奇','192.168.10.2','61.135.207.200','CC-TEST-1','开发测试机','P2PCache开发测试','Linux','','二楼机房地上','','SSR|陈奇|192.168.10.2|61.135.207.200|CC-TEST-1|开发测试机|P2PCache开发测试|Linux||二楼机房地上|'),(66,'SSR','陈奇','192.168.10.3','','CC-TEST-2','开发测试机器','P2PCache开发测试试','Linux','','二楼机房地上','','SSR|陈奇|192.168.10.3||CC-TEST-2|开发测试机器|P2PCache开发测试试|Linux||二楼机房地上|'),(67,'SSR','陈奇','192.168.10.4','','200CC-TEST-3','开发测试机器','P2PCache开发测试','Linux','','六æ¥¼机房','','SSR|陈奇|192.168.10.4||200CC-TEST-3|开发测试机器|P2PCache开发测试|Linux||六æ¥¼机房|'),(68,'SSR','陈奇','192.168.10.5','61.135.207.201','CC-TEST-4','发测试机器','P2PCache开发测试','Linux','','二楼机房地','','SSR|陈奇|192.168.10.5|61.135.207.201|CC-TEST-4|发测试机器|P2PCache开发测试|Linux||二楼机房地|'),(69,'SSR','陈奇','192.168.10.6','','CC-TEST-5','开发测试机器','P2PCache2PCache开发测试','Linux','','二楼机房地上','','SSR|陈奇|192.168.10.6||CC-TEST-5|开发测试机器|P2PCache2PCache开发测试|Linux||二楼机房地上|'),(87,'SSR','张利海','192.168.100.175','','c1-st-9010','开发测试机器','NPM数据库','Linux','','5号机房D10柜','','SSR|张利海|192.168.100.175||c1-st-9010|开发测试机器|NPM数据库|Linux||5号机房D10柜|'),(71,'SSR','陈奇','192.168.10.7','','CC-TEST-6','开发测试机器','P2PCache开发测','Linux','','二楼机房地上','','SSR|陈奇|192.168.10.7||CC-TEST-6|开发测试机器|P2PCache开发测|Linux||二楼机房地上|'),(86,'SSR','张利海','192.168.100.477','61.135.208.25','c1-st-9003','在线设备','Wiki与螳螂','Linux','','5号机房G9柜','','SSR|张利海|192.168.100.477|61.135.208.25|c1-st-9003|在线设备|Wiki与螳螂|Linux||5号机房G9柜|'),(74,'SSR','郝兆军','192.168.100.170','','C1-ST-9012','开发测试机器','LLC测试','Linux','Iptables','5号机房D9柜','','SSR|郝兆军|192.168.100.170||C1-ST-9012|开发测试机器|LLC测试|Linux|Iptables|5号机房D9柜|'),(75,'SSR','郝兆军','192.168.100.180','','C1-ST-10026','开发机器','DLC开发','Linux','','5号房D10柜','','SSR|郝兆军|192.168.100.180||C1-ST-10026|开发机器|DLC开发|Linux||5号房D10柜|'),(84,'SSR','张利海','192.168.100.183','','C1-ST-10024','开发测试机器','开发机CMP/NPM/BMA开发环境','Linux','','5号机房D10柜','','SSR|张利海|192.168.100.183||C1-ST-10024|开发测试机器|开发机CMP/NPM/BMA开发环境|Linux||5号机房D10柜|'),(85,'SSR','张利海','192.168.100.174','58.68.140.11','c1-st-9004','在线设备','SIS 数据库系 MySQL','Linux','','5号机房G9柜','','SSR|张利海|192.168.100.174|58.68.140.11|c1-st-9004|在线设备|SIS 数据库系 MySQL|Linux||5号机房G9柜|'),(83,'SSR','张利海','192.168.100.178','61.135.208.26','C1-ST-10014','在线设备','备系统NPM前端','Linux','','5号机房G9柜','','SSR|张利海|192.168.100.178|61.135.208.26|C1-ST-10014|在线设备|备系统NPM前端|Linux||5号机房G9柜|'),(82,'SSR','张利海','192.168.100.173','','C1-ST-9011','开发机器','CMP/NPM开发测试机器','Linux','','5号机房G9柜','','SSR|张利海|192.168.100.173||C1-ST-9011|开发机器|CMP/NPM开发测试机器|Linux||5号机房G9柜|'),(88,'SSR','张胜利','192.168.100.164','61.135.208.23','C1-ST-7761','开发器','SIS模块，SIS数据库备份/backup/mysql_sis','Linux','','5机房G9柜','','SSR|张胜利|192.168.100.164|61.135.208.23|C1-ST-7761|开发器|SIS模块，SIS数据库备份/backup/mysql_sis|Linux||5机房G9柜|'),(89,'SSR','张胜利','192.168.100.163','61.135.208.22','C1-192ST-7760','在线设备','SIS备机','Linux','Iptables','5号机房G9柜','','SSR|张胜利|192.168.100.163|61.135.208.22|C1-192ST-7760|在线设备|SIS备机|Linux|Iptables|5号机房G9柜|'),(90,'SSR','张胜利','192.168.100.162','61.135.208.21','C1-ST-10012','线设备','SIS主机','linux','Iptables','5号机房G9柜','','SSR|张胜利|192.168.100.162|61.135.208.21|C1-ST-10012|线设备|SIS主机|linux|Iptables|5号机房G9柜|'),(91,'SSR','周志军','192.168.100.159','','C1-ST-5820','公共性能测试机器','能测试','Linux','','5号机房D9柜','','SSR|周志军|192.168.100.159||C1-ST-5820|公共性能测试机器|能测试|Linux||5号机房D9柜|'),(93,'SSR','周志军','192.168.100.160','','C1-ST-5827','公共性能测试机器','性能测试','Linux','','5号机房D8柜','','SSR|周志军|192.168.100.160||C1-ST-5827|公共性能测试机器|性能测试|Linux||5号机房D8柜|'),(94,'SSR','符立佳','192.168.100.197','','C1-ST-1000022','开发机器','FDNS测试机器','Linux','','5号机房D10柜','','SSR|符立佳|192.168.100.197||C1-ST-1000022|开发机器|FDNS测试机器|Linux||5号机房D10柜|'),(95,'SSR','符立佳','192.168.100.181','','C1-ST-10015','开发机器','DLC发','Linux','','5号机房D10柜','','SSR|符立佳|192.168.100.181||C1-ST-10015|开发机器|DLC发|Linux||5号机房D10柜|'),(96,'GSP','许健 ','192.168.100.136','','4H4QZ1X ','测试','开发机 ','CentOS 5.5 x86_64 ','','电信机房3-13机柜','','GSP|许健 |192.168.100.136 ||4H4QZ1X |测试|开发机 |CentOS 5.5 x86_64 ||电信机房3-13机柜|'),(97,'GSP','张学业','192.168.100.167','','C1-ST-1904 ','支撑 ','开发（基准测试） ','Linux ','','5号机房D8柜 ','密码:123456 ','GSP|张学业|192.168.100.167||C1-ST-1904 |支撑 |开发（基准测试） |Linux ||5号机房D8柜 |密码:123456 '),(98,'GSP','栗伟','192.168.100.165','','C1-ST-2904 ','支撑','GSP svn 服务器团队代码管理 ','Linux','','5号机房D9柜','','GSP|栗伟|192.168.100.165 ||C1-ST-2904 |支撑|GSP svn 服务器团队代码管理 |Linux||5号机房D9柜|'),(99,'GSP','栗伟','192.168.100.168','','C1-ST-7165 ','支撑','	测试用例服务器和文档发布服务器 ','windows ','','5号机房D8柜','','GSP|栗伟|192.168.100.168 ||C1-ST-7165 |支撑|	测试用例服务器和文档发布服务器 |windows ||5号机房D8柜|'),(100,'GSP','栗伟','192.168.100.190','','9800001600011350 ','支撑','	64位打包服务器 ','	linux_x86_64 ','','5号机房D9柜 ','	密码:zhongdong','GSP|栗伟|192.168.100.190 ||9800001600011350 |支撑|	64位打包服务器 |	linux_x86_64 ||5号机房D9柜 |	密码:zhongdong'),(101,'GSP','栗伟','192.168.100.194','','	C1-ST-10066 ','支撑','	测试服务器源站apache ','Linux','','5号机房D9柜','','GSP|栗伟|192.168.100.194||	C1-ST-10066 |支撑|	测试服务器源站apache |Linux||5号机房D9柜|');
+/*!40000 ALTER TABLE `csp_device` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_content_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `app_label` (`app_label`,`model`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (1,'permission','auth','permission'),(2,'group','auth','group'),(3,'user','auth','user'),(4,'message','auth','message'),(5,'content type','contenttypes','contenttype'),(6,'session','sessions','session'),(7,'site','sites','site'),(8,'task meta','djcelery','taskmeta'),(9,'taskset meta','djcelery','tasksetmeta'),(10,'interval','djcelery','intervalschedule'),(11,'crontab','djcelery','crontabschedule'),(12,'periodic tasks','djcelery','periodictasks'),(13,'periodic task','djcelery','periodictask'),(14,'worker','djcelery','workerstate'),(15,'task','djcelery','taskstate'),(16,'api access','tastypie','apiaccess'),(17,'api key','tastypie','apikey'),(18,'entry','sample','entry'),(19,'migration history','south','migrationhistory'),(20,'device','csp','device');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_3da3d3d8` (`expire_date`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_site`
+--
+
+DROP TABLE IF EXISTS `django_site`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_site` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `domain` varchar(100) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_site`
+--
+
+LOCK TABLES `django_site` WRITE;
+/*!40000 ALTER TABLE `django_site` DISABLE KEYS */;
+INSERT INTO `django_site` VALUES (1,'example.com','example.com');
+/*!40000 ALTER TABLE `django_site` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `djcelery_crontabschedule`
+--
+
+DROP TABLE IF EXISTS `djcelery_crontabschedule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `djcelery_crontabschedule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `minute` varchar(64) NOT NULL,
+  `hour` varchar(64) NOT NULL,
+  `day_of_week` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `djcelery_crontabschedule`
+--
+
+LOCK TABLES `djcelery_crontabschedule` WRITE;
+/*!40000 ALTER TABLE `djcelery_crontabschedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `djcelery_crontabschedule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `djcelery_intervalschedule`
+--
+
+DROP TABLE IF EXISTS `djcelery_intervalschedule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `djcelery_intervalschedule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `every` int(11) NOT NULL,
+  `period` varchar(24) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `djcelery_intervalschedule`
+--
+
+LOCK TABLES `djcelery_intervalschedule` WRITE;
+/*!40000 ALTER TABLE `djcelery_intervalschedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `djcelery_intervalschedule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `djcelery_periodictask`
+--
+
+DROP TABLE IF EXISTS `djcelery_periodictask`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `djcelery_periodictask` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `task` varchar(200) NOT NULL,
+  `interval_id` int(11) DEFAULT NULL,
+  `crontab_id` int(11) DEFAULT NULL,
+  `args` longtext NOT NULL,
+  `kwargs` longtext NOT NULL,
+  `queue` varchar(200) DEFAULT NULL,
+  `exchange` varchar(200) DEFAULT NULL,
+  `routing_key` varchar(200) DEFAULT NULL,
+  `expires` datetime DEFAULT NULL,
+  `enabled` tinyint(1) NOT NULL,
+  `last_run_at` datetime DEFAULT NULL,
+  `total_run_count` int(10) unsigned NOT NULL,
+  `date_changed` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `djcelery_periodictask_17d2d99d` (`interval_id`),
+  KEY `djcelery_periodictask_7aa5fda` (`crontab_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `djcelery_periodictask`
+--
+
+LOCK TABLES `djcelery_periodictask` WRITE;
+/*!40000 ALTER TABLE `djcelery_periodictask` DISABLE KEYS */;
+/*!40000 ALTER TABLE `djcelery_periodictask` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `djcelery_periodictasks`
+--
+
+DROP TABLE IF EXISTS `djcelery_periodictasks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `djcelery_periodictasks` (
+  `ident` smallint(6) NOT NULL,
+  `last_update` datetime NOT NULL,
+  PRIMARY KEY (`ident`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `djcelery_periodictasks`
+--
+
+LOCK TABLES `djcelery_periodictasks` WRITE;
+/*!40000 ALTER TABLE `djcelery_periodictasks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `djcelery_periodictasks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `djcelery_taskstate`
+--
+
+DROP TABLE IF EXISTS `djcelery_taskstate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `djcelery_taskstate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `state` varchar(64) NOT NULL,
+  `task_id` varchar(36) NOT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `tstamp` datetime NOT NULL,
+  `args` longtext,
+  `kwargs` longtext,
+  `eta` datetime DEFAULT NULL,
+  `expires` datetime DEFAULT NULL,
+  `result` longtext,
+  `traceback` longtext,
+  `runtime` double DEFAULT NULL,
+  `retries` int(11) NOT NULL,
+  `worker_id` int(11) DEFAULT NULL,
+  `hidden` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `task_id` (`task_id`),
+  KEY `djcelery_taskstate_355bfc27` (`state`),
+  KEY `djcelery_taskstate_52094d6e` (`name`),
+  KEY `djcelery_taskstate_f459b00` (`tstamp`),
+  KEY `djcelery_taskstate_20fc5b84` (`worker_id`),
+  KEY `djcelery_taskstate_c91f1bf` (`hidden`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `djcelery_taskstate`
+--
+
+LOCK TABLES `djcelery_taskstate` WRITE;
+/*!40000 ALTER TABLE `djcelery_taskstate` DISABLE KEYS */;
+/*!40000 ALTER TABLE `djcelery_taskstate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `djcelery_workerstate`
+--
+
+DROP TABLE IF EXISTS `djcelery_workerstate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `djcelery_workerstate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hostname` varchar(255) NOT NULL,
+  `last_heartbeat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `hostname` (`hostname`),
+  KEY `djcelery_workerstate_1475381c` (`last_heartbeat`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `djcelery_workerstate`
+--
+
+LOCK TABLES `djcelery_workerstate` WRITE;
+/*!40000 ALTER TABLE `djcelery_workerstate` DISABLE KEYS */;
+/*!40000 ALTER TABLE `djcelery_workerstate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sample_entry`
+--
+
+DROP TABLE IF EXISTS `sample_entry`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sample_entry` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `pub_date` datetime NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `slug` varchar(50) NOT NULL,
+  `body` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sample_entry_403f60f` (`user_id`),
+  KEY `sample_entry_56ae2a2a` (`slug`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sample_entry`
+--
+
+LOCK TABLES `sample_entry` WRITE;
+/*!40000 ALTER TABLE `sample_entry` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sample_entry` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `south_migrationhistory`
+--
+
+DROP TABLE IF EXISTS `south_migrationhistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `south_migrationhistory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_name` varchar(255) NOT NULL,
+  `migration` varchar(255) NOT NULL,
+  `applied` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `south_migrationhistory`
+--
+
+LOCK TABLES `south_migrationhistory` WRITE;
+/*!40000 ALTER TABLE `south_migrationhistory` DISABLE KEYS */;
+INSERT INTO `south_migrationhistory` VALUES (1,'csp','0001_initial','2012-02-02 03:17:50'),(2,'csp','0002_auto__add_field_device_info','2012-02-02 09:15:04');
+/*!40000 ALTER TABLE `south_migrationhistory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tastypie_apiaccess`
+--
+
+DROP TABLE IF EXISTS `tastypie_apiaccess`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tastypie_apiaccess` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `request_method` varchar(10) NOT NULL,
+  `accessed` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tastypie_apiaccess`
+--
+
+LOCK TABLES `tastypie_apiaccess` WRITE;
+/*!40000 ALTER TABLE `tastypie_apiaccess` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tastypie_apiaccess` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tastypie_apikey`
+--
+
+DROP TABLE IF EXISTS `tastypie_apikey`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tastypie_apikey` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `key` varchar(256) NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tastypie_apikey`
+--
+
+LOCK TABLES `tastypie_apikey` WRITE;
+/*!40000 ALTER TABLE `tastypie_apikey` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tastypie_apikey` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2012-02-03 16:24:56

@@ -1,0 +1,57 @@
+{% macro param(name, title, value) -%}
+<div class="control-group">
+    <label class="control-label" for="input01">{{ title }}</label>
+    <div class="controls">
+        <input type="text" class="input-xlarge" id="{{ name }}" name="{{ name }}" value="{{ value }}">
+    </div>
+</div>
+{%- endmacro %}
+
+{% extends 'nav.html' %}
+
+{% block content %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#select01 option[value="{{ device.group }}"]').attr('selected','selected');
+    });
+</script>
+
+<div class="row">
+    <div class="span8">
+        <form class="form-horizontal" method="post" action="/csp/device/{{ device.id }}/update">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Device {{ device.id }}</legend>
+                <div class="control-group">
+                    <label class="control-label" for="select01">Select list</label>
+                    <div class="controls">
+                        <select id="select01" name="group">
+                            <option value="SSR">SSR</option>
+                            <option value="GSP">GSP</option>
+                            <option value="COP">COP</option>
+                        </select>
+                    </div>
+                </div>
+                {{ param('owner', '责任人', device.owner)}}
+                {{ param('intranet_ip', '兆维机房IP', device.intranet_ip)}}
+                {{ param('external_ip', '外网IP', device.external_ip)}}
+                {{ param('sn', '资源编号', device.sn)}}
+                {{ param('type', '用途', device.type)}}
+                {{ param('os', '系统', device.os)}}
+                {{ param('safe', '安全措施', device.safe)}}
+                {{ param('location', '位置', device.location)}}
+                {{ param('remark', '备注', device.remark)}}
+                <div class="control-group">
+                    <label class="control-label" for="textarea">用途</label>
+                    <div class="controls">
+                        <textarea class="input-xlarge" id="textarea" name="description" rows="3">{{ device.description }}</textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    {% endblock %}

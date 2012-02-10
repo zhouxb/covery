@@ -1,0 +1,52 @@
+{% macro param(name, title) -%}
+<div class="control-group">
+    <label class="control-label" for="input01">{{ title }}</label>
+    <div class="controls">
+        <input type="text" class="input-xlarge" id="{{ name }}" name="{{ name }}">
+    </div>
+</div>
+{%- endmacro %}
+
+{% extends 'nav.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="span8">
+        <form class="form-horizontal" method="post" action="/csp/device/create">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Create Device</legend>
+                <div class="control-group">
+                    <label class="control-label" for="select01">Select list</label>
+                    <div class="controls">
+                        <select id="select01" name="group">
+                            <option>SSR</option>
+                            <option>GSP</option>
+                            <option>COP</option>
+                        </select>
+                    </div>
+                </div>
+                {{ param('owner', '责任人')}}
+                {{ param('intranet_ip', '兆维机房IP')}}
+                {{ param('external_ip', '外网IP')}}
+                {{ param('sn', '资源编号')}}
+                {{ param('type', '类别')}}
+                {{ param('os', '系统')}}
+                {{ param('safe', '安全措施')}}
+                {{ param('location', '位置')}}
+                {{ param('remark', '备注')}}
+                <div class="control-group">
+                    <label class="control-label" for="textarea">用途</label>
+                    <div class="controls">
+                        <textarea class="input-xlarge" id="textarea" name="description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    {% endblock %}
+

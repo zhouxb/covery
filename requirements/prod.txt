@@ -1,0 +1,9 @@
+django==1.3.0
+south
+django-tastypie
+/*django-piston*/
+Jinja2
+coffin
+Celery
+django-celery
+

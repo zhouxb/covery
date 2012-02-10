@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<img src="{{ MEDIA_URL }}img/hi.jpg" />
+<span class="label success">New</span>
+
+<!-- 1. jinja2 set-->
+{% set testing = 'it worked' %}
+{% set another = testing %}
+{{ another }}
+
+{% set other = "<script>alert('libear')</script>" %}
+{{ other }}
+
+<!-- 2. filter -->
+{% filter upper %}
+This text becomes uppercase
+{% endfilter %}
+
+
+<!-- 3. global functions -->
+{% for number in range(10)%}
+    {{ number }}
+{% endfor %}
+
+<!-- 4. macro -->
+{% macro input(name, value='', type='text', size=20) -%}
+  <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}" size="{{ size }}">
+{%- endmacro %}
+<p>{{ input('username') }}</p>
+<p>{{ input('password', type='password') }}</p>
+
+<!-- 5. autoescape -->
+
+{% endblock %}
+
