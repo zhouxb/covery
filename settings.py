@@ -114,6 +114,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     #'django.contrib.auth.middleware.RemoteUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'contrib.auth.middleware.RequireLoginMiddleware',
 )
 
 import ldap
@@ -135,6 +136,13 @@ AUTHENTICATION_BACKENDS = (
 
 LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/account'
+
+LOGIN_REQUIRED_URLS = (
+        r'/account/',
+        r'/csp/',
+)
+
+LOGIN_REQUIRED_URLS_EXCEPTIONS = ()
 
 ROOT_URLCONF = 'urls'
 

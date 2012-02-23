@@ -7,37 +7,43 @@
 {% block content %}
 
 <div class="container-fluid">
-  <div class="row-fluid">
+    <div class="row-fluid">
 
-    {% include "account/sidebar.html" %}
+        {% include "account/sidebar.html" %}
 
-    <div class="span9">
+        <div class="span9">
 
-      {% include "util/message_success.html" %}
+            {% include "util/message_success.html" %}
+            {% if current_user.first_name == '' %}
+            <div class="alert alert-error">
+                <a class="close" data-dismiss="alert">&times;</a>
+                <strong>重要提示!</strong> 请正确更新用户姓名,以保证之前填写的设备能够同步
+            </div>
+            {% endif %}
 
-      <div class="page-header">
-        <h1>Welcome! <small>用户基本信息</small></h1>
-      </div>
+            <div class="page-header">
+                <h1>Welcome! <small>用户基本信息</small></h1>
+            </div>
 
-      <table class="table table-striped">
-        <tbody>
-          <tr>
-            <th>姓名</th>
-            <th>{{ current_user.first_name }} {{ current_user.last_name }}</th>
-          </tr>
-          <tr>
-            <th>Email</th>
-            <th>{{ current_user.email }}</th>
-          </tr>
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>姓名</th>
+                        <th>{{ current_user.first_name }} {{ current_user.last_name }}</th>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <th>{{ current_user.email }}</th>
+                    </tr>
 
-        </tbody>
+                </tbody>
 
-      </table>
+            </table>
 
-      {% include "account/update.html" %}
+            {% include "account/update.html" %}
 
+        </div>
     </div>
-  </div>
 </div>
 
 {% endblock %}

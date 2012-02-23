@@ -3,8 +3,8 @@
 from coffin.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
-#from csp.models import Device
-from device.models import Device
+from csp.models import Device
+#from device.models import Device
 
 def index(request):
     info = request.GET.get('info', '').strip()

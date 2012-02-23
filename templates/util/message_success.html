@@ -1,6 +1,6 @@
 
 {% if messages %}
-<div class="alert alert-success">
+<div id="alert_success" class="alert alert-success">
   {% for message in messages %}
   <a class="close" data-dismiss="alert">&times;</a> <strong>{{ message }}</strong>
   {% endfor %}
@@ -8,5 +8,5 @@
 {% endif %}
 
 <script>
-    setTimeout(function(){$(".alert").alert('close')}, 5000);
+    setTimeout(function(){$("#alert_success").alert('close')}, 5000);
 </script>

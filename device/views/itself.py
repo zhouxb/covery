@@ -18,6 +18,7 @@ DEPARTMENT = {
 
 def index(request):
     name = '%s%s' % (request.user.first_name, request.user.last_name)
+    print name
     devices = Old_device.objects.filter(owner=name)
 
     for device in devices:

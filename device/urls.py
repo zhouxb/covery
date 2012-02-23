@@ -15,7 +15,6 @@ urlpatterns += patterns('device.views.order',
     (r'^order/new$', 'new'),
     (r'^order/create$', 'create'),
     (r'^(?P<id>\d+)/order/delete', 'delete'),
-    (r'^order/update_status', 'update_status'),
 )
 
 urlpatterns += patterns('device.views.statis',
