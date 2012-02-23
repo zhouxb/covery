@@ -1,1 +1,3 @@
 Django实验性项目
+
+sudo apt-get build-dep python-ldap

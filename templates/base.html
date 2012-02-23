@@ -6,20 +6,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="stylesheet" href="{{ MEDIA_URL }}bootstrap/css/bootstrap.css">
-    <script src="{{ MEDIA_URL }}js/jquery-1.7.min.js"></script>
-    <script src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
-    <script src="{{ MEDIA_URL }}bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.css">
+    <script src="{{ STATIC_URL }}js/jquery-1.7.1.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.tablesorter.min.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
   </head>
 
   <body data-spy="scroll" data-target=".subnav" data-offset="50">
     {% block nav %}
     {% endblock %}
 
-    <div class="container">
-      {% block content %}
-      {% endblock %}
-    </div>
+    {% block content %}
+    {% endblock %}
 
   </body>
 </html>

@@ -14,4 +14,3 @@ urlpatterns = patterns('csp.views',
     (r'^devices/about$', 'about'),
 )
 
-

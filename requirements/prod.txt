@@ -6,4 +6,5 @@ Jinja2
 coffin
 Celery
 django-celery
-
+python-ldap
+django-auth-ldap

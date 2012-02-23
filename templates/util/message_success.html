@@ -1,0 +1,12 @@
+
+{% if messages %}
+<div class="alert alert-success">
+  {% for message in messages %}
+  <a class="close" data-dismiss="alert">&times;</a> <strong>{{ message }}</strong>
+  {% endfor %}
+</div>
+{% endif %}
+
+<script>
+    setTimeout(function(){$(".alert").alert('close')}, 5000);
+</script>

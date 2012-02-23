@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load url from future %}
+
+{% block content %}
+
+<div class="container">
+<div class="hero-unit">
+    <h2>CSP内部设备管理系统</h2>
+</div>
+
+<div class="row">
+    <div class="span4">
+        <h4>须知</h4>
+        <dl>
+            <dt>登入系统</dt>
+            <dd>以ChinaCache的邮箱名和密码即可登入</dd>
+            <dt>设备管理</dt>
+            <dd>核对自己内部使用测试机是否登记,并可以使用</dd>
+        </dl>
+
+    </div>
+    <div class="span5 offset3">
+        <form class="from-horizontal" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+            {% csrf_token %}
+            <fieldset>
+                {% if form.errors %}
+                <p>Your username and password didn't match. Please try again.</p>
+                {% endif %}
+
+                <div class="control-group">
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-user"></i></span>
+                        <input class="span3" id="in_username" name="username" type="text">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-lock"></i></span>
+                        <input class="span3" id="id_password" name="password" type="password">
+                    </div>
+                </div>
+
+                <div class="from-actions">
+                    <input class="btn btn-large btn-success" type="submit" value="login" />
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+

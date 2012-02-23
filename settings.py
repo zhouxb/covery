@@ -1,7 +1,6 @@
 import os
 CURRENT_PATH = os.path.dirname(os.path.realpath(__file__))
 TEMPLATE_PATH = os.path.join(CURRENT_PATH, 'templates')
-MEDIA_PATH = os.path.join(CURRENT_PATH, 'media')
 
 # Django settings for discovery project.
 
@@ -50,12 +49,12 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(CURRENT_PATH, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = '/site_media/'
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -74,6 +73,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    os.path.join(CURRENT_PATH, 'static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -97,15 +97,46 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.messages.context_processors.messages',
+    'contrib.context_processors.current_user',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    #'django.contrib.auth.middleware.RemoteUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'discovery.urls'
+import ldap
+from django_auth_ldap.config import LDAPSearch
+
+AUTH_LDAP_SERVER_URI = "ldap://ccldap.chinacache.com"
+AUTH_LDAP_BIND_DN = 'cn=2,cn=Users,dc=chinacache,dc=local'
+AUTH_LDAP_BIND_PASSWORD = 'qwer1234!'
+AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=chinacache,dc=chinacache,dc=local", ldap.SCOPE_SUBTREE, "(sAMAccountName=%(user)s)")
+
+AUTH_LDAP_USER_ATTR_MAP = {
+    "email": "mail"
+}
+
+AUTHENTICATION_BACKENDS = (
+    'django_auth_ldap.backend.LDAPBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = '/accounts/login'
+LOGIN_REDIRECT_URL = '/account'
+
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     TEMPLATE_PATH,
@@ -126,6 +157,9 @@ INSTALLED_APPS = (
     'tastypie',
     'coffin',
     'djcelery',
+
+    'account',
+    'device',
     'sample',
     'csp',
     # Uncomment the next line to enable the admin:
@@ -133,6 +167,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+AUTH_PROFILE_MODULE = 'account.UserProfile'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -156,6 +192,7 @@ LOGGING = {
         },
     }
 }
+
 
 #JINJA2_FILTERS = (
     #'path.to.myfilter',

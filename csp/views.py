@@ -3,8 +3,8 @@
 from coffin.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
-from csp.models import Device
-# Create your views here.
+#from csp.models import Device
+from device.models import Device
 
 def index(request):
     info = request.GET.get('info', '').strip()
@@ -127,3 +127,4 @@ def about(request):
     gsp = Device.objects.filter(group='GSP').count()
     ssr = Device.objects.filter(group='SSR').count()
     return render_to_response('csp/device/about.html', {'cop':cop, 'gsp':gsp, 'ssr':ssr}, context_instance=RequestContext(request))
+

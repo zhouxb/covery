@@ -1,0 +1,33 @@
+
+<a class="btn btn-primary" href="#" onclick="a_update();"><i class="icon-pencil icon-white"></i> Create</a>
+
+<div id="myModal" class="modal hide fade">
+    <div class="hero-unit">
+        <form class="form-horizontal" action="/account/profile/update" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend>用户基本信息修改</legend>
+                {% for field in form %}
+                <div class="control-group">
+                    <label class="control-label">{{ field.label }}</label>
+                    <div class="controls">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Save changes</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    function a_update(){
+        $('#myModal').modal('show')
+    }
+
+</script>
+

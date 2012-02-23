@@ -7,9 +7,15 @@
 </div>
 {%- endmacro %}
 
-{% extends 'nav.html' %}
+{% extends 'base.html' %}
+
+{% block nav %}
+{% include "nav.html" %}
+{% endblock %}
 
 {% block content %}
+
+<div class="container">
 <script type="text/javascript">
     $(document).ready(function() {
         $('#select01 option[value="{{ device.group }}"]').attr('selected','selected');
@@ -53,5 +59,6 @@
             </fieldset>
         </form>
     </div>
+</div>
 
     {% endblock %}
