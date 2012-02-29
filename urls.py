@@ -14,9 +14,9 @@ urlpatterns = patterns('',
     (r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name':'registration/login.html'}),
     (r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login'),
 
-    (r'^account/', include('account.urls')),
-    (r'^sample/', include('sample.urls')),
-    (r'^csp/', include('csp.urls')),
+    url(r'^account/', include('account.urls', namespace='account', app_name='account')),
+    url(r'^sample/', include('sample.urls', namespace='sample', app_name='sample')),
+    url(r'^csp/', include('csp.urls', namespace='csp', app_name='csp')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

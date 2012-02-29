@@ -162,8 +162,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'south',
-    'tastypie',
     'coffin',
+    'haystack',
+    'tastypie',
     'djcelery',
 
     'account',
@@ -175,6 +176,21 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+#HAYSTACK_CONNECTIONS = {
+    #'default': {
+        #'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    #}
+#}
+
+import os
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(CURRENT_PATH, 'whoosh_index')
+    }
+}
+
 
 AUTH_PROFILE_MODULE = 'account.UserProfile'
 

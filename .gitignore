@@ -1,3 +1,4 @@
 *.pyc
 .svn
 *.sql
+whoosh_index

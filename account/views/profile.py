@@ -1,11 +1,12 @@
 # -*- coding:utf8 -*-
 
 #from contrib.shortcuts import render
-from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib import messages
+from django.contrib.auth.models import User
 from account.forms import UserProfile
 
 def index(request):
@@ -31,5 +32,5 @@ def update(request):
 
     messages.info(request, '更新成功!')
 
-    return HttpResponseRedirect('/account')
+    return HttpResponseRedirect(reverse('account:index'))
 

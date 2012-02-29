@@ -33,8 +33,11 @@ class Device(models.Model):
     status = models.CharField('状态', max_length=1, choices=STATUS, default='0')
     info = models.CharField(max_length=1000, blank=True)
 
-class MonthlyWeatherByCity(models.Model):
-    month = models.IntegerField()
-    boston_temp = models.DecimalField(max_digits=5, decimal_places=1)
-    houston_temp = models.DecimalField(max_digits=5, decimal_places=1)
+    def __unicode__(self):
+        return self.remark
+
+    class Meta:
+        verbose_name_plural = '设备'
+
+
 

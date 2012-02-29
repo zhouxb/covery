@@ -1,9 +1,10 @@
+{% load url from future %}
+{% url 'account:profile_update' as profile_update_url %}
 
 <a class="btn btn-primary" href="#" onclick="a_update();"><i class="icon-pencil icon-white"></i> 更新</a>
-
 <div id="myModal" class="modal hide fade">
     <div class="hero-unit">
-        <form class="form-horizontal" action="/account/profile/update" method="post">
+        <form class="form-horizontal" action="{{ profile_update_url }}" method="post">
             {% csrf_token %}
             <fieldset>
                 <legend>用户基本信息修改</legend>
