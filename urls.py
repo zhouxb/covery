@@ -15,8 +15,11 @@ urlpatterns = patterns('',
     (r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login'),
 
     url(r'^account/', include('account.urls', namespace='account', app_name='account')),
-    url(r'^sample/', include('sample.urls', namespace='sample', app_name='sample')),
-    url(r'^csp/', include('csp.urls', namespace='csp', app_name='csp')),
+    url(r'^crawler/', include('crawler.urls', namespace='crawler', app_name='crawler')),
+    url(r'^broker/', include('broker.urls', namespace='broker', app_name='broker')),
+
+    #url(r'^sample/', include('sample.urls', namespace='sample', app_name='sample')),
+    #url(r'^csp/', include('csp.urls', namespace='csp', app_name='csp')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

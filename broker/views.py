@@ -10,4 +10,6 @@ from broker.tasks import add
 
 def index(request):
     add.delay(4, 4)
+
     return HttpResponseRedirect('/')
+

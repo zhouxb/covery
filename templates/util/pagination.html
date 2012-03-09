@@ -1,0 +1,23 @@
+
+<div class="pagination">
+    <ul>
+        {% if pages.has_previous %}
+        <li><a href="?page={{ pages.previous_page_number }}">&laquo;</a></li>
+        {% endif %}
+
+        {% for number in pages.paginator.page_range %}
+            <li id="page{{number}}"><a href="?page={{ number }}">{{ number }}</a></li>
+        {% endfor %}
+
+        {% if pages.has_next %}
+        <li><a href="?page={{ pages.next_page_number }}">&raquo;</a></li>
+        {% endif %}
+        </ul>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#page" + {{ pages.number}}).addClass("active");
+    });
+</script>
+

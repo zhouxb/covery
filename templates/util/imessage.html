@@ -1,12 +1,11 @@
-
 {% if messages %}
-<div id="alert_success" class="alert alert-success">
   {% for message in messages %}
+  <div id="imessage" class="alert alert-{{ message.tags}}">
   <a class="close" data-dismiss="alert">&times;</a> <strong>{{ message }}</strong>
   {% endfor %}
 </div>
 {% endif %}
 
 <script>
-    setTimeout(function(){$("#alert_success").alert('close')}, 5000);
+    setTimeout(function(){$("#imessage").alert('close')}, 5000);
 </script>

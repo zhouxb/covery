@@ -1,0 +1,6 @@
+-r prod.txt
+
+nose
+django-nose
+lettuce
+lxml

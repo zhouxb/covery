@@ -1,8 +1,8 @@
-import os
+import os, sys
 CURRENT_PATH = os.path.dirname(os.path.realpath(__file__))
 TEMPLATE_PATH = os.path.join(CURRENT_PATH, 'templates')
 
-# Django settings for discovery project.
+# Django settings for covery project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -11,18 +11,32 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+#EMAIL_HOST = 'smtp.yoursite.com'
+#EMAIL_PORT = 25
+#EMAIL_HOST_USER = 'your_account'
+#EMAIL_HOST_PASSWORD = 's3cret'
+
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'discovery',                      # Or path to database file if using sqlite3.
+        'NAME': 'covery',                      # Or path to database file if using sqlite3.
         'USER': 'root',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+if DEBUG and 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'covery.db',                      # Or path to database file if using sqlite3.
+        }
+    }
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -164,18 +178,30 @@ INSTALLED_APPS = (
     'south',
     'coffin',
     'haystack',
-    'tastypie',
+    #'tastypie',
     'djcelery',
 
     'account',
-    'device',
-    'sample',
-    'csp',
+    'crawler',
+    #'broker',
+    #'device',
+    #'sample',
+    #'csp',
+
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+if DEBUG:
+    INSTALLED_APPS += (
+        'django_nose',
+    )
+
+#TEST_RUNNER = 'djcelery.contrib.test_runner.CeleryTestSuiteRunner'
+
+#TEST_APPS = ('broker',)
 
 #HAYSTACK_CONNECTIONS = {
     #'default': {
@@ -183,7 +209,6 @@ INSTALLED_APPS = (
     #}
 #}
 
-import os
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
@@ -240,3 +265,9 @@ BROKER_USER = "guest"
 BROKER_PASSWORD = "guest"
 BROKER_VHOST = "/"
 
+#FIXME
+#CELERY_QUEUES = {
+    #"reqular_tasks":{
+            #"binding_key":"task.#",
+    #},
+#}

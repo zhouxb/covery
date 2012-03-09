@@ -56,3 +56,4 @@ class LDAPRemoteUserBackend(RemoteUserBackend):
     if user.usernamesername in superusers:
     user.is_superuser=True
     user.save()superusers
+

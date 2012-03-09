@@ -2,3 +2,5 @@
 .svn
 *.sql
 whoosh_index
+migrations
+covery.db

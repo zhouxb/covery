@@ -1,0 +1,47 @@
+
+{% macro table(thead, tbody, checkbox=False) -%}
+
+<table class="table table-striped table-bordered table-condensed">
+    <thead>
+      <tr>
+        {% if checkbox %}
+        <th width="15"><input type='checkbox' id='select' name='table_ids'/></th>
+        {% endif %}
+
+        {% for th in thead %}
+            <th width="{{ th.width }}">{{ th.label }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for device in devices %}
+      <tr>
+        <td><input type='checkbox' id='{{device.id}}' name='table_id'/></td>
+        <td>{{ device.get_department_display }}</td>
+        <td>{{ device.intranet_ip }}</td>
+        <td>{{ device.external_ip }}</td>
+        <td>{{ device.sn }}</td>
+        <td>{{ device.type }}</td>
+        <td>{{ device.os }}</td>
+
+        {% if device.status == '1' %}
+        <td><span class="label label-success">{{ device.get_status_display }}</span></td>
+        {% endif %}
+        {% if device.status == '2' %}
+        <td><span class="label label-important">{{ device.get_status_display }}</span></td>
+        {% endif %}
+        {% if device.status == '0' %}
+        <td><span class="label label-warning">{{ device.get_status_display }}</span></td>
+        {% endif %}
+
+        <td>
+          <a href="/account/device/{{ device.id }}/show"><i class="icon-edit"></i></a>
+          <a href="#" onclick="a_delete({{ device.id }});" ><i class="icon-trash"></i></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{%- endmacro %}
