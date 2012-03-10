@@ -22,3 +22,14 @@ search template
 ./manage.py update_index
 RealTimeSearchIndex
 
+Celery
+
+1. Tasks
+2. Workers
+3. Monitoring
+4. Routing
+
+* Periodic Task by djcelery
+
+celerybeat must be running
+

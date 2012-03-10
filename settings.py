@@ -265,6 +265,8 @@ BROKER_USER = "guest"
 BROKER_PASSWORD = "guest"
 BROKER_VHOST = "/"
 
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler' 
+
 #FIXME
 #CELERY_QUEUES = {
     #"reqular_tasks":{

@@ -1,23 +1,25 @@
 # -*- coding:utf8 -*-
 
+from celery.result import AsyncResult
 #from contrib.shortcuts import render
+from contrib.shortcuts import json_response
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib import messages
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from crawler import tasks
 from djcelery.models import TaskMeta
 from crawler.models import Crawler
 from crawler.forms import CrawlerForm
+from crawler import tasks
 
 def index(request):
     page = int(request.GET.get('page', '1'))
 
     crawlers = Crawler.objects.all()
 
-    paginator = Paginator(crawlers, 5)
+    paginator = Paginator(crawlers, 10)
 
     try:
         crawlers = paginator.page(page)
@@ -34,9 +36,6 @@ def create(request):
 
     if form.is_valid():
         crawler = form.save(commit=False)
-
-        task_id = tasks.Crawler.delay('crawler').task_id
-        crawler.task_id = task_id
         crawler.save()
 
         messages.success(request, '添加成功!')
@@ -45,18 +44,33 @@ def create(request):
 
     return HttpResponseRedirect(reverse('crawler:index'))
 
+def run(request, id):
+    crawler = Crawler.objects.get(id=id)
+    task_id = tasks.Crawler.delay('crawler').task_id
+    crawler.task_id = task_id
+    crawler.save()
+
+    return json_response({'id':id})
+
+def delete(request, id):
+    Crawler.objects.get(id=id).delete()
+    return json_response({'id':id})
 
 def show(request, id):
     crawler = Crawler.objects.get(id=id)
+    print dir(crawler)
+    #print crawler.__class__._meta.get_field_by_name('name')[0].verbose_name
 
-    task = TaskMeta.objects.get(task_id=crawler.task_id)
+    return render(request, 'crawler/show.html', {'crawler':crawler})
+
+def status(request, id):
+    crawler = Crawler.objects.get(id=id)
+
+    task = AsyncResult(crawler.task_id)
+
     print dir(task)
+    print task.ready()
+    print task.state
 
-    return HttpResponseRedirect(reverse('crawler:index'))
-
-def delete(request):
-    TaskMeta.objects.all()
-
-    return HttpResponseRedirect('/')
-
+    return json_response({'id':id})
 

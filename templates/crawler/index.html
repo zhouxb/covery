@@ -14,9 +14,12 @@
     <thead>
         <tr>
             <th width="15"><input type='checkbox' id='select' name='all_id'/></th>
-            <th width="40">任务名称</th>
-            <th width="100">添加时间</th>
-            <th width="100">操作</th>
+            <th>任务名称</th>
+            <th>检测域名</th>
+            <th>起始地址</th>
+            <th width="40">层级</th>
+            <th>添加时间</th>
+            <th width="60">操作</th>
         </tr>
     </thead>
     <tbody>
@@ -24,9 +27,18 @@
         <tr>
             <td><input type='checkbox' id='{{crawler.id}}' name='item_id'/></td>
             <td>{{ crawler.name }}</td>
+            <td>{{ crawler.allowed_domain }}</td>
+            <td>{{ crawler.start_url }}</td>
+            <td>{{ crawler.depth_limit }}</td>
             <td>{{ crawler.date_joined }}</td>
-            <td>
-                <a href="{% url 'crawler:show' crawler.id %}"><i class="icon-eye-open"></i></a>
+            <td id="opertion_{{ crawler.id }}">
+                {% if crawler.task_id or crawler.periodic_task_id %}
+                    <a href="{% url 'crawler:show' crawler.id%}"><i class='icon-eye-open'></i></a>
+                {% else %}
+                    <a href="#" onclick="run('{% url 'crawler:run' crawler.id %}', '{% url 'crawler:show' crawler.id %}');"><i class="icon-share-alt"></i></a>
+                    <a href="{% url 'crawler:show' crawler.id %}"><i class="icon-time"></i></a>
+                    <a href="#" onclick="remove('{% url 'crawler:delete' crawler.id %}');"><i class="icon-trash"></i></a>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
@@ -36,6 +48,38 @@
 {% with crawlers as pages %}
 {% include "util/pagination.html" %}
 {% endwith%}
+
+{% include "crawler/opertion_message.html" %}
+<script>
+
+    function run(crawler_run_url, crawler_show_url){
+        $("#run_message").modal("show");
+
+        $("#a_run").click(function(){
+            $("#run_message").modal("hide");
+
+            $.get(crawler_run_url, function(data) {
+                $("#opertion_" + data['id']).html(
+                    "<a href='" + crawler_show_url + "'><i class='icon-eye-open'></i></a>"
+                );
+            })
+            .error(function() { alert("error");});
+        })
+    }
+
+    function remove(crawler_delete_url){
+        $("#delete_message").modal("show");
+
+        $("#a_delete").click(function(){
+            $("#delete_message").modal("hide");
+
+            $.get(crawler_delete_url, function(data) {
+                $("#opertion_" + data['id']).parents("tr").empty();
+            })
+            .error(function() { alert("error");});
+        })
+    }
+</script>
 
 {% endblock %}
 
