@@ -27,9 +27,12 @@ Celery
 1. Tasks
 2. Workers
 3. Monitoring
+
 4. Routing
+celeryd -Q {queue_name}
 
 * Periodic Task by djcelery
+
 
 celerybeat must be running
 

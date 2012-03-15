@@ -183,6 +183,8 @@ INSTALLED_APPS = (
 
     'account',
     'crawler',
+    'domain',
+
     #'broker',
     #'device',
     #'sample',
@@ -195,11 +197,13 @@ INSTALLED_APPS = (
 )
 
 if DEBUG:
+
     INSTALLED_APPS += (
         'django_nose',
     )
+    #if 'crawler' in sys.argv:
 
-#TEST_RUNNER = 'djcelery.contrib.test_runner.CeleryTestSuiteRunner'
+        #TEST_RUNNER = 'djcelery.contrib.test_runner.CeleryTestSuiteRunner'
 
 #TEST_APPS = ('broker',)
 
@@ -265,11 +269,27 @@ BROKER_USER = "guest"
 BROKER_PASSWORD = "guest"
 BROKER_VHOST = "/"
 
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler' 
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
-#FIXME
-#CELERY_QUEUES = {
-    #"reqular_tasks":{
-            #"binding_key":"task.#",
-    #},
-#}
+CELERY_QUEUES = {
+    "default": {
+        "binding_key": "task.#",
+    },
+    "crawlers": {
+        "binding_key": "crawler.#",
+    },
+}
+
+CELERY_DEFAULT_QUEUE = "default"
+CELERY_DEFAULT_EXCHANGE = "tasks"
+CELERY_DEFAULT_EXCHANGE_TYPE = "topic"
+CELERY_DEFAULT_ROUTING_KEY = "task.default"
+
+CELERY_ROUTES = {
+    'crawler.tasks.crawl':
+    {
+        'queue': 'crawlers',
+        'routing_key':'crawler.crawl',
+    },
+}
+

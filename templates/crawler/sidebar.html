@@ -1,0 +1,31 @@
+{% load url from future %}
+{% url "crawler:index" as crawler_index_url %}
+
+<div class="span3">
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            <li class="nav-header">爬虫</li>
+            <li id="_crawler_">
+                <a href="{{ crawler_index_url }}">
+                    <i class="icon-home"></i>
+                    Home
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        var pathname = window.location.pathname;
+        var path_name = pathname.split("/")
+
+        if(path_name[3]=="" || path_name[3]==undefined){
+            var name = "_" + path_name[1] + "_" + path_name[2]
+            }else{
+            var name = "_" + path_name[1] + "_" + path_name[2] + "_" + path_name[3]
+        }
+
+        $("#" + name).addClass("active");
+    })
+</script>

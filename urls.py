@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 
     url(r'^account/', include('account.urls', namespace='account', app_name='account')),
     url(r'^crawler/', include('crawler.urls', namespace='crawler', app_name='crawler')),
+    url(r'^domain/', include('domain.urls', namespace='domain', app_name='domain')),
     url(r'^broker/', include('broker.urls', namespace='broker', app_name='broker')),
 
     #url(r'^sample/', include('sample.urls', namespace='sample', app_name='sample')),

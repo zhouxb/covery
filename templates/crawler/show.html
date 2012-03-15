@@ -8,359 +8,80 @@
 
 {% load url from future %}
 {% url "crawler:status" crawler.id as crawler_status_url %}
-{{ crawler_status_url }}
+{% url "domain:show" crawler.id as domain_show_url %}
 
-<script>
-    function update_progress(){
-        alert($("#task_progress").attr("style"))
-    }
 
-    <!--setInterval(function(){update_progress();}, 3000);-->
-</script>
+<div class="container-fluid">
+  <div class="row-fluid">
+    {% include "crawler/sidebar.html" %}
+    <div class="span9">
 
-<h1>检测任务: {{ crawler.name }}</h1>
-<p class="marketing-byline">
-检测域名: {{ crawler.allowed_domain}}, 起始地址: {{ crawler.start_url }}, 层级: {{ crawler.depth_limit }}
-</p>
+      <h2>检测任务: {{ crawler.name }}</h2>
 
-<div class="progress progress-danger progress-striped active">
-    <div id='task_progress' class="bar" style="width: 40%;"></div>
+      <blockquote>
+        <ul class="unstyled">
+          <code>  检测域名  :</code><strong> {{ crawler.allowed_domain}} </strong>
+          <code>  起始地址  :</code><strong> {{ crawler.start_url }} </strong>
+          <code>  层级  :</code><strong> {{ crawler.depth_limit }} </strong>
+        </ul>
+      </blockquote>
+
+      {% if state == "FINISHED" %}
+      <span id="task_state" class="label label-success">{{ state }}</span>
+      {% endif %}
+
+      {% if state == "FAILURE" or state == "ERROR" %}
+      <span id="task_state" class="label label-important">{{ state }}</span>
+      {% endif %}
+
+      {% if state == "PROGRESS" or state == "START" %}
+      <span id="task_state" class="label label-info">{{ state }}</span>
+      {% endif %}
+
+      {% if state == "PENDING" %}
+      <span id="task_state" class="label label-warning">{{ state }}</span>
+      {% endif %}
+
+
+      <div id="domain_show">
+      </div>
+
+    </div>
+  </div>
 </div>
 
-<div class="accordion" id="accordion2">
-    <div class="accordion-group">
-        <div class="accordion-heading">
-            <a
-                class="accordion-toggle"
-                data-toggle="collapse"
-                data-parent="#accordion2"
-                href="#collapseOne">
-                Collapsible
-                Group
-                Item
-                #1
-            </a>
-        </div>
-        <div
-            id="collapseOne"
-            class="accordion-body
-            collapse
-            in">
-            <div
-                class="accordion-inner">
-                Anim
-                pariatur
-                cliche
-                reprehenderit,
-                enim
-                eiusmod
-                high
-                life
-                accusamus
-                terry
-                richardson
-                ad
-                squid.
-                3
-                wolf
-                moon
-                officia
-                aute,
-                non
-                cupidatat
-                skateboard
-                dolor
-                brunch.
-                Food
-                truck
-                quinoa
-                nesciunt
-                laborum
-                eiusmod.
-                Brunch
-                3
-                wolf
-                moon
-                tempor,
-                sunt
-                aliqua
-                put
-                a
-                bird
-                on
-                it
-                squid
-                single-origin
-                coffee
-                nulla
-                assumenda
-                shoreditch
-                et.
-                Nihil
-                anim
-                keffiyeh
-                helvetica,
-                craft
-                beer
-                labore
-                wes
-                anderson
-                cred
-                nesciunt
-                sapiente
-                ea
-                proident.
-                Ad
-                vegan
-                excepteur
-                butcher
-                vice
-                lomo.
-                Leggings
-                occaecat
-                craft
-                beer
-                farm-to-table,
-                raw
-                denim
-                aesthetic
-                synth
-                nesciunt
-                you
-                probably
-                haven't
-                heard
-                of
-                them
-                accusamus
-                labore
-                sustainable
-                VHS.
-            </div>
-        </div>
-    </div>
-    <div
-        class="accordion-group">
-        <div
-            class="accordion-heading">
-            <a
-                class="accordion-toggle"
-                data-toggle="collapse"
-                data-parent="#accordion2"
-                href="#collapseTwo">
-                Collapsible
-                Group
-                Item
-                #2
-            </a>
-        </div>
-        <div
-            id="collapseTwo"
-            class="accordion-body
-            collapse">
-            <div
-                class="accordion-inner">
-                Anim
-                pariatur
-                cliche
-                reprehenderit,
-                enim
-                eiusmod
-                high
-                life
-                accusamus
-                terry
-                richardson
-                ad
-                squid.
-                3
-                wolf
-                moon
-                officia
-                aute,
-                non
-                cupidatat
-                skateboard
-                dolor
-                brunch.
-                Food
-                truck
-                quinoa
-                nesciunt
-                laborum
-                eiusmod.
-                Brunch
-                3
-                wolf
-                moon
-                tempor,
-                sunt
-                aliqua
-                put
-                a
-                bird
-                on
-                it
-                squid
-                single-origin
-                coffee
-                nulla
-                assumenda
-                shoreditch
-                et.
-                Nihil
-                anim
-                keffiyeh
-                helvetica,
-                craft
-                beer
-                labore
-                wes
-                anderson
-                cred
-                nesciunt
-                sapiente
-                ea
-                proident.
-                Ad
-                vegan
-                excepteur
-                butcher
-                vice
-                lomo.
-                Leggings
-                occaecat
-                craft
-                beer
-                farm-to-table,
-                raw
-                denim
-                aesthetic
-                synth
-                nesciunt
-                you
-                probably
-                haven't
-                heard
-                of
-                them
-                accusamus
-                labore
-                sustainable
-                VHS.
-            </div>
-        </div>
-    </div>
-    <div
-        class="accordion-group">
-        <div
-            class="accordion-heading">
-            <a
-                class="accordion-toggle"
-                data-toggle="collapse"
-                data-parent="#accordion2"
-                href="#collapseThree">
-                Collapsible
-                Group
-                Item
-                #3
-            </a>
-        </div>
-        <div
-            id="collapseThree"
-            class="accordion-body
-            collapse">
-            <div
-                class="accordion-inner">
-                Anim
-                pariatur
-                cliche
-                reprehenderit,
-                enim
-                eiusmod
-                high
-                life
-                accusamus
-                terry
-                richardson
-                ad
-                squid.
-                3
-                wolf
-                moon
-                officia
-                aute,
-                non
-                cupidatat
-                skateboard
-                dolor
-                brunch.
-                Food
-                truck
-                quinoa
-                nesciunt
-                laborum
-                eiusmod.
-                Brunch
-                3
-                wolf
-                moon
-                tempor,
-                sunt
-                aliqua
-                put
-                a
-                bird
-                on
-                it
-                squid
-                single-origin
-                coffee
-                nulla
-                assumenda
-                shoreditch
-                et.
-                Nihil
-                anim
-                keffiyeh
-                helvetica,
-                craft
-                beer
-                labore
-                wes
-                anderson
-                cred
-                nesciunt
-                sapiente
-                ea
-                proident.
-                Ad
-                vegan
-                excepteur
-                butcher
-                vice
-                lomo.
-                Leggings
-                occaecat
-                craft
-                beer
-                farm-to-table,
-                raw
-                denim
-                aesthetic
-                synth
-                nesciunt
-                you
-                probably
-                haven't
-                heard
-                of
-                them
-                accusamus
-                labore
-                sustainable
-                VHS.
-            </div>
-        </div>
-    </div>
-    {% endblock %}
+<script>
+
+  $("#domain_show").load("{{ domain_show_url }}");
+
+  function update_state(){
+    $.get("{{ crawler_status_url }}", function(data){
+      if(data["state"] == "FINISHED"){
+        state = "label label-success"
+      }
+      else if(data["state"] == "FAILURE" || data["state"] == "ERROR"){
+        state = "label label-important"
+      }
+      else if(data["state"] == "PROGRESS" || data["state"] == "START"){
+        state = "label label-info"
+      }
+      else{
+        state = "label label-warning"
+      }
+
+      $("#task_state").attr("class", state)
+      $("#task_state").html(data['state'])
+
+    })
+    .error(function() { alert("error")});
+
+    $("#domain_show").load("{{ domain_show_url }}");
+  }
+
+  {% if not state == 'FAILURE' %}
+  setInterval(function(){update_state();}, 3000);
+  {% endif %}
+
+</script>
+
+{% endblock %}

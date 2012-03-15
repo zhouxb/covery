@@ -1,16 +1,52 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
+# -*- coding:utf8 -*-
 
 from django.test import TestCase
+from django.test.client import Client
+from django.core.urlresolvers import reverse
+import anyjson
 
+class DomainViewTest(TestCase):
+    def setUp(self):
+        self.c = Client()
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+    def test_create_on_success(self):
+        response = self.c.post(
+                reverse('domain:create'),
+                {
+                    'name': 'http://www.a.com',
+                    'port': 8080,
+                    'task_id': 1
+                }
+        )
+
+        status = anyjson.loads(response.content)['status']
+
+        assert status == 'success'
+
+    def test_create_on_success_by_https(self):
+        response = self.c.post(
+                reverse('domain:create'),
+                {
+                    'name': 'https://www.a.com',
+                    'task_id': 1
+                }
+        )
+
+        status = anyjson.loads(response.content)['status']
+
+        assert status == 'success'
+
+    def test_create_on_failure(self):
+        response = self.c.post(
+                reverse('domain:create'),
+                {
+                    'name': 'http://www.a.com',
+                    'port': 'port',
+                    'task_id': 1
+                }
+        )
+
+        status = anyjson.loads(response.content)['status']
+
+        assert status == 'failure'
+

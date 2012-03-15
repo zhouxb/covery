@@ -1,3 +1,7 @@
+{% load url from future %}
+{% url 'crawler:index' as crawler_index_url %}
+{% url 'domain:index' as domain_index_url %}
+
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container-fluid" style="width: auto;">
@@ -9,16 +13,11 @@
             <a class="brand" href="#">CSP</a>
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">爬虫<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/csp/devices">Home</a></li>
-                        <li><a href="/csp/device/new">New</a></li>
-                        <!--<li><a href="/csp/devices/batch">Batch</a></li>-->
-                        <li class="divider"></li>
-                        <li><a href="http://sis.ssr.chinacache.com/wiki/index.php/CSP_DEVICE_LIST">WIKI CSP DEVICE LIST</a></li>
-                        <li><a href="/csp/devices/about">About</a></li>
-                    </ul>
+                    <li>
+                        <a href="{{ domain_index_url }}">域名</b></a>
+                    </li>
+                    <li>
+                        <a href="{{ crawler_index_url }}">爬虫</b></a>
                     </li>
                 </ul>
                 <ul class="nav pull-right">

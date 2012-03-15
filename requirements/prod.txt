@@ -16,3 +16,4 @@ django-auth-ldap
 django-haystack
 whoosh
 
+python-rest-client

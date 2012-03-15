@@ -7,4 +7,5 @@ urlpatterns = patterns('crawler.views',
     url(r'^(?P<id>\d+)/delete$', 'delete', name='delete'),
     url(r'^(?P<id>\d+)/show$', 'show', name='show'),
     url(r'^(?P<id>\d+)/status$', 'status', name='status'),
+    url(r'^(?P<id>\d+)/update$', 'update', name='update'),
 )

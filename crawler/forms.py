@@ -7,5 +7,5 @@ class CrawlerForm(forms.ModelForm):
 
     class Meta:
         model = Crawler
-        exclude = ('task_id', 'periodic_task_id', 'date_joined')
+        exclude = ('task_id', 'periodic_task_id', 'jobid', 'status', 'date_joined')
 

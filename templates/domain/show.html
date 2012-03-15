@@ -1,0 +1,21 @@
+
+<h5>{{ domains.count }}</h5>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>域名</th>
+            <th>端口</th>
+            <th>添加时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for domain in domains %}
+        <tr>
+            <td>{{ domain.name }}</td>
+            <td>{{ domain.port }}</td>
+            <td>{{ domain.date_joined }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

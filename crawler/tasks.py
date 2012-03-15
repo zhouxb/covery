@@ -1,29 +1,56 @@
+import pycurl
+import urllib
+import StringIO
+
 from datetime import timedelta
 from celery.task import Task, PeriodicTask
+from celery.task import task
 
-class Crawler(Task):
-    #name = 'task.crawler'
-    #rounting_key = 'task.crawler'
+from crawler.models import Crawler
 
-    def run(self, name):
-        print name
+from restful_lib import Connection
+import anyjson
 
-class Say(Task):
-    def run(self):
-        print 'say'
 
-class PeriodicCrawler(PeriodicTask):
-    run_every = timedelta(seconds=60)
+@task(max_retries=2, queue='crawlers', routing_key='crawler.crawl')
+def crawl(id, hostname, scrapyd_url='http://localhost:6800/schedule.json'):
+    #logger = crawl.get_logger()
+    #logger.info('crawl')
 
-    def run(self, **kwargs):
-        logger = self.get_logger(**kwargs)
-        logger.info('Running full name task')
+    crawl.update_state(state='PROGRESS')
 
-        return 100
+    crawler = Crawler.objects.get(id=id)
+    post_data_dic = {
+            'project':'covery_crawler',
+            'spider':'common',
+            'setting':'DEPTH_LIMIT=%s' % crawler.depth_limit,
+            'covery_args':'%s|%s|%s|%s' % (
+                    crawler.start_url,
+                    crawler.allowed_domain,
+                    hostname,
+                    id
+                )
+            }
 
-#from djcelery.models import IntervalSchedule
-#from celery.schedules import schedule
-#from datetime import timedelta
+    try:
+        crl = pycurl.Curl()
+        crl.fp = StringIO.StringIO()
+        crl.setopt(crl.POSTFIELDS, urllib.urlencode(post_data_dic))
+        crl.setopt(pycurl.URL, scrapyd_url)
+        crl.setopt(crl.WRITEFUNCTION, crl.fp.write)
+        crl.perform()
 
-#sched = IntervalSchedule.from_schedule(schedule(timedelta(hours=3)
+        spider = anyjson.loads(crl.fp.getvalue())
+
+        if spider['status'] == 'ok':
+            crawler.jobid = spider['jobid']
+            crawler.status = 'START:start'
+            crawler.save()
+        else:
+            crawler.status = 'ERROR:%s' % spider['message']
+            crawler.save()
+
+    except Exception, exc:
+        crawler.status = 'ERROR:%s' % exc[1]
+        crawler.save()
 
