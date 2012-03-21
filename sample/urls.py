@@ -1,13 +1,8 @@
 from coffin.conf.urls.defaults import *
-from sample.api import EntryResource
-
-entry_resource = EntryResource()
 
 urlpatterns = patterns('sample.views',
     (r'^$', 'index'),
-)
-
-urlpatterns += patterns('',
-    (r'^api/', include(entry_resource.urls)),
+    url(r'^demo$', 'demo', name='demo'),
+    url(r'^demo1$', 'demo1', name='demo1'),
 )
 

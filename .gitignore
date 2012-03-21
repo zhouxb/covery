@@ -4,3 +4,4 @@
 whoosh_index
 migrations
 covery.db
+celerybeat-schedule

@@ -42,6 +42,10 @@
       <span id="task_state" class="label label-warning">{{ state }}</span>
       {% endif %}
 
+      {% if state == "INIT" %}
+      <span id="task_state" class="label label-warning">{{ state }}</span>
+      {% endif %}
+
 
       <div id="domain_show">
       </div>

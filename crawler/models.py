@@ -16,3 +16,5 @@ class Crawler(models.Model):
     date_update = models.DateTimeField('更新时间', default=datetime.datetime.now)
     date_joined = models.DateTimeField('添加时间', default=datetime.datetime.now)
 
+    class Meta:
+        ordering = ('-date_joined',)

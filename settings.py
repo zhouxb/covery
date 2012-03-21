@@ -45,11 +45,11 @@ if DEBUG and 'test' in sys.argv:
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Asia/Shanghai'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-cn'
 
 SITE_ID = 1
 
@@ -175,25 +175,17 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django.contrib.admindocs',
+    'django.contrib.admin',
+
     'south',
     'coffin',
     'haystack',
-    #'tastypie',
     'djcelery',
 
     'account',
     'crawler',
     'domain',
-
-    #'broker',
-    #'device',
-    #'sample',
-    #'csp',
-
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 )
 
 if DEBUG:
@@ -207,11 +199,6 @@ if DEBUG:
 
 #TEST_APPS = ('broker',)
 
-#HAYSTACK_CONNECTIONS = {
-    #'default': {
-        #'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-    #}
-#}
 
 HAYSTACK_CONNECTIONS = {
     'default': {

@@ -51,6 +51,7 @@ def run(request, id):
     if not crawler.task_id:
         task_id = tasks.crawl.apply_async(args=[id, 'http://localhost:8000']).task_id
         crawler.task_id = task_id
+        crawler.status = 'INIT:init'
         crawler.save()
 
     return json_response({'id':id})
