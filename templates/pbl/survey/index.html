@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+{% include "nav.html" %}
+{% endblock %}
+
+{% block content %}
+{% load url from future %}
+{% url 'pbl:survey_update' as pbl_survey_update_url %}
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    {% include "pbl/sidebar.html" %}
+
+    <div class="span9">
+      {% include "util/imessage.html" %}
+
+      <ul id="tab" class="nav nav-tabs">
+        <li id="tab_IP"><a href="#IP" data-toggle="tab">IP列表</a></li>
+        <li id="tab_domain"><a href="#domain" data-toggle="tab">域名列表</a></li>
+        <li id="tab_URL"><a href="#URL" data-toggle="tab">URL列表</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+
+        <div class="tab-pane fade" id="IP">
+          <form class="form-horizontal" action="{{ pbl_survey_update_url }}" method="post">
+            {% csrf_token %}
+            <fieldset>
+              <div class="control-group">
+                <label class="control-label" for="textarea">IP:</label>
+                <div class="controls">
+                  <textarea class="input-xlarge" id="textarea" rows="20" name="IP">{{ IP }}</textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <div class="tab-pane fade" id="domain">
+          <form class="form-horizontal" action="{{ pbl_survey_update_url }}" method="post">
+            {% csrf_token %}
+            <fieldset>
+              <div class="control-group">
+                <label class="control-label" for="select01">运营商</label>
+                <div class="controls">
+                  <select id="operator" name="operator">
+                    <option id="CT" value="CT">中国电信</option>
+                    <option id="CNC" value="CNC">中国网通</option>
+                    <option id="CMCC" value="CMCC">中国移动</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label" for="textarea">域名:</label>
+                <div class="controls">
+                  <textarea class="input-xlarge" id="textarea" rows="20" name="domain">{{ domain }}</textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <div class="tab-pane fade" id="URL">
+          <form class="form-horizontal" action="{{ pbl_survey_update_url }}" method="post">
+            {% csrf_token %}
+            <fieldset>
+              <div class="control-group">
+                <label class="control-label" for="textarea">URL:</label>
+                <div class="controls">
+                  <textarea class="input-xlarge" id="textarea" rows="20" name="URL">{{ URL }}</textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $("#tab_{{ tab_pane }}").addClass("active");
+    $("#{{ tab_pane }}").attr("class", "tab-pane active");
+    $("#{{ operator }}").attr("selected", "selected");
+  })
+</script>
+
+{% endblock %}
+

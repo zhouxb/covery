@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^crawler/', include('crawler.urls', namespace='crawler', app_name='crawler')),
     url(r'^domain/', include('domain.urls', namespace='domain', app_name='domain')),
 
+    url(r'^pbl/', include('pbl.urls', namespace='pbl', app_name='pbl')),
     url(r'^sample/', include('sample.urls', namespace='sample', app_name='sample')),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT }),
 )

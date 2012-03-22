@@ -7,10 +7,11 @@ from celery.task import Task, PeriodicTask
 from celery.task import task
 
 from crawler.models import Crawler
+
 import anyjson
 
 
-@task(max_retries=2, queue='crawlers', routing_key='crawler.crawl')
+@task(max_retries=2, queue='crawlers', routing_key='crawler.crawl', name='crawler.tasks.crawl')
 def crawl(id, hostname, scrapyd_url='http://localhost:6800/schedule.json'):
     #logger = crawl.get_logger()
     #logger.info('crawl')

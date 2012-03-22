@@ -186,6 +186,7 @@ INSTALLED_APPS = (
     'account',
     'crawler',
     'domain',
+    'pbl',
 )
 
 if DEBUG:
@@ -265,6 +266,9 @@ CELERY_QUEUES = {
     "crawlers": {
         "binding_key": "crawler.#",
     },
+    "pbls": {
+        "binding_key": "pbl.#",
+    },
 }
 
 CELERY_DEFAULT_QUEUE = "default"
@@ -277,6 +281,11 @@ CELERY_ROUTES = {
     {
         'queue': 'crawlers',
         'routing_key':'crawler.crawl',
+    },
+    'pbl.tasks.probe':
+    {
+        'queue': 'pbls',
+        'routing_key':'pbl.probe',
     },
 }
 

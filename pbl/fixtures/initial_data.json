@@ -1,0 +1,13 @@
+[
+    {
+        "pk": 1,
+        "model": "pbl.survey",
+        "fields":
+            {
+                "IP": "127.0.0.1",
+                "domain": "localhost",
+                "URL": "www.baidu.com/mm.mp3"
+            }
+    }
+
+]

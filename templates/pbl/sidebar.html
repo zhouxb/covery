@@ -1,0 +1,36 @@
+{% load url from future %}
+{% url 'pbl:survey_index' as pbl_survey_index_url %}
+{% url 'pbl:survey_set' as pbl_survey_set_url %}
+{% url 'pbl:state_index' as pbl_state_index_url %}
+
+<div class="span3">
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            <li class="nav-header">PBL</li>
+            <li id="_pbl_survey">
+            <a href="{{ pbl_survey_index_url }}"> <i class="icon-home"></i> Home </a>
+            </li>
+            <li id="_pbl_state">
+            <a href="{{ pbl_state_index_url }}"><i class="icon-list-alt"></i> State</a>
+            </li>
+            <li id="_pbl_survey_set">
+            <a href="{{ pbl_survey_set_url }}"><i class="icon-cog"></i> Settings</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        var pathname = window.location.pathname;
+        var path_name = pathname.split("/")
+
+        if(path_name[3]=="" || path_name[3]==undefined){
+            var name = "_" + path_name[1] + "_" + path_name[2]
+            }else{
+            var name = "_" + path_name[1] + "_" + path_name[2] + "_" + path_name[3]
+        }
+
+        $("#" + name).addClass("active");
+    })
+</script>
