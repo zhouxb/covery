@@ -6,7 +6,7 @@
 
 {% block content %}
 {% load url from future %}
-
+{% url 'pbl:state_show' as pbl_state_show_url %}
 
 <div class="container-fluid">
     <div class="row-fluid">
@@ -14,68 +14,16 @@
 
         <div class="span9">
             {% include "util/imessage.html" %}
-            <table class="table table-striped table-bordered table-condensed">
-                <thead>
-                    <tr>
-                        <th width="15"><input type='checkbox' id='select' name='all_id'/></th>
-                        <th>域名</th>
-                        <th>端口</th>
-                        <th>添加时间</th>
-                        <th width="60">操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for domain in domains.object_list %}
-                    <tr>
-                        <td><input type='checkbox' id='{{crawler.id}}' name='item_id'/></td>
-                        <td>{{ domain.name }}</td>
-                        <td>{{ domain.port }}</td>
-                        <td>{{ domain.date_joined }}</td>
-                        <td>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
-            {% with domains as pages %}
-            {% include "util/pagination.html" %}
-            {% endwith%}
-
+            <div id="chart" class="well">
+            </div>
         </div>
     </div>
 </div>
 
 {% include "crawler/opertion_message.html" %}
 <script>
+    $("#chart").load("{{ pbl_state_show_url }}");
 
-    function run(crawler_run_url, crawler_show_url){
-        $("#run_message").modal("show");
-
-        $("#a_run").click(function(){
-            $("#run_message").modal("hide");
-
-            $.get(crawler_run_url, function(data) {
-                $("#opertion_" + data['id']).html(
-                "<a href='" + crawler_show_url + "'><i class='icon-eye-open'></i></a>"
-                );
-            })
-            .error(function() { alert("error");});
-        })
-    }
-
-    function remove(crawler_delete_url){
-        $("#delete_message").modal("show");
-
-        $("#a_delete").click(function(){
-            $("#delete_message").modal("hide");
-
-            $.get(crawler_delete_url, function(data) {
-                $("#opertion_" + data['id']).parents("tr").empty();
-            })
-            .error(function() { alert("error");});
-        })
-    }
 </script>
 
 {% endblock %}

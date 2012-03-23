@@ -1,38 +1,26 @@
-Django实验性项目
+xingbo.zhou <xingbo.zhou@chinacache.com>
+v0.1.0, 2012.3.23
 
+Covery
+
+== Install ==
+
+1. 安装ldap
+
+Ubuntu
 sudo apt-get build-dep python-ldap
 
-python-haystack
-支持utf8编码
+2. 安装celery & rabbitmq
+pass
 
-1.Modify Your Settings.py
-add install_apps haystack
-add HAYSTACK_CONNECTIONS ---> Simple Solr Whoosh
-
-2.Handling Data
-Creating SearchIndexes
-add myapp/search_indexes
-
-3.Setting Up The Views
-add URLconf
-search template
-
-4.Reindex
-./manage.py rebuild_index
-./manage.py update_index
-RealTimeSearchIndex
-
-Celery
-
-1. Tasks
-2. Workers
-3. Monitoring
-
-4. Routing
-celeryd -Q {queue_name}
-
-* Periodic Task by djcelery
+3. 安装haystack
+pass
 
 
-celerybeat must be running
+== Run ==
 
+1. mysql create database
+
+2. rabbitmq server
+
+3. scrapy

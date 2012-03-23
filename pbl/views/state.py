@@ -22,3 +22,6 @@ def create(request, id):
 
     return json_response({'status':status})
 
+def show(request, template_name='pbl/state/chart.html'):
+    return render(request, template_name)
+

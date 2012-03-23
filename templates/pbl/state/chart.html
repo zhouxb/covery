@@ -1,0 +1,42 @@
+<div id="chart_container" style="width: 100%; height: 400px"></div>
+
+<!--<script src="{{ STATIC_URL }}js/jquery-1.7.1.min.js"></script>-->
+<script src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script>
+  var chart1; // globally available
+  $(document).ready(function() {
+    chart1 = new Highcharts.Chart({
+      chart: {
+        renderTo: 'chart_container',
+        type: 'column'
+      },
+      title: {
+        text: '个人设备统计'
+      },
+      legend: {
+        layout: 'vertical',
+        backgroundColor: '#FFFFFF',
+        align: 'titleleft',
+        verticalAlign: 'top',
+        x: 100,
+        y: 70,
+        floating: true,
+        layoutshadow: true
+      },
+      xAxis: {
+        categories: ['设备']
+      },
+      yAxis: {
+        title: {
+          text: 'count'
+        }
+      },
+      series:
+      [
+        {
+          name: '可用',
+          data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]        }
+        ]
+    });
+  });
+</script>

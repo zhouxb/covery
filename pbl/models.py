@@ -14,6 +14,7 @@ class Survey(models.Model):
     IP = models.TextField('IP列表')
     domain = models.TextField('域名列表')
     URL = models.TextField('URL列表')
+    schedule = models.CharField('周期', max_length=5, null=True)
     date_joined = models.DateTimeField('添加时间', default=datetime.datetime.now)
 
 class State(models.Model):

@@ -5,13 +5,22 @@ def _textarea_to_listr(text, check_ip=False):
     if check_ip:
         IP = []
         for item in text:
-            try:
-                socket.inet_aton(item)
-                IP.append(item)
-            except:
-                pass
+            if _is_valid_ipv4_address(item): IP.append(item)
         return '|'.join(sorted(IP))
     return '|'.join(sorted(text))
+
+def _is_valid_ipv4_address(address):
+    try:
+        addr= socket.inet_pton(socket.AF_INET, address)
+    except AttributeError:
+        try:
+            addr= socket.inet_aton(address)
+        except socket.error:
+            return False
+        return address.count('.') == 3
+    except socket.error:
+        return False 
+    return True
 
 def build_survey(survey, IP, domain, operator, URL):
 
@@ -46,4 +55,12 @@ def listr_to_textarea(survey):
     URL = survey.URL.replace('|', '\r\n')
 
     return {'IP':IP, 'domain':domain, 'operator':operator, 'URL':URL}
+
+MINUTE = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14',
+'15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27',
+'28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
+'41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53',
+'54', '55', '56', '57', '58', '59']
+
+HOUR = ['*', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']
 
