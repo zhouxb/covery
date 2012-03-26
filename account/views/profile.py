@@ -30,7 +30,7 @@ def update(request):
         user.email=form.cleaned_data['email']
         user.save()
 
-    messages.info(request, '更新成功!')
+    messages.success(request, '更新成功!')
 
     return HttpResponseRedirect(reverse('account:index'))
 
