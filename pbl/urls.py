@@ -11,6 +11,8 @@ urlpatterns = patterns('pbl.views.survey',
 
 urlpatterns += patterns('pbl.views.state',
     url(r'^state$', 'index', name='state_index'),
+    url(r'^state/schedule/create$', 'schedule_create', name='state_schedule_create'),
     url(r'^state/(?P<id>\d+)/create$', 'create', name='state_create'),
-    url(r'^state/show$', 'show', name='state_show'),
+    url(r'^state/(?P<id>\d+)/show$', 'show', name='state_show'),
+    url(r'^state/(?P<id>\d+)/show_json$', 'show_json', name='state_show_json'),
 )

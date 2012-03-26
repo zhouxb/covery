@@ -6,6 +6,3 @@ urlpatterns = patterns('account.views.profile',
     url(r'^profile/update$', 'update', name='profile_update'),
 )
 
-urlpatterns += patterns('',
-    (r'^device/', include('device.urls')),
-)

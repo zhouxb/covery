@@ -12,7 +12,9 @@
 
 <div class="container-fluid">
   <div class="row-fluid">
+    <div class="span3">
     {% include "pbl/sidebar.html" %}
+  </div>
 
     <div class="span9">
       {% include "util/imessage.html" %}
@@ -25,8 +27,8 @@
         {% csrf_token %}
         <label class="control-label">minute: </label>
         <input id="minute" name="minute" type="text" class="input-small" placeholder="每隔多少分钟" value="{{ minute }}">
-        <label class="control-label">hour: </label>
-        <input id="hour" name="hour" type="text" class="input-small" placeholder="每隔多少小时" value="{{ hour }}">
+        <!--<label class="control-label">hour: </label>-->
+        <!--<input id="hour" name="hour" type="text" class="input-small" placeholder="每隔多少小时" value="{{ hour }}">-->
         <button id="run_time" type="submit" class="btn btn-info" rel="popover" title="提示:" data-content="PBL回源探测任务周期执行<br/>分钟: 必须为1~59<br/>小时: *或1~23 *代表所有">
           <i class="icon-refresh icon-white"></i> Run Time
         </button>

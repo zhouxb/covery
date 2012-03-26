@@ -2,6 +2,7 @@
 
 import datetime
 from django.db import models
+import anyjson
 
 class Survey(models.Model):
     OPERATOR = (
@@ -23,4 +24,20 @@ class State(models.Model):
     domain_state = models.TextField('解析探测状态', null=True)
     URL_state = models.TextField('URL探测状态', null=True)
     date_joined = models.DateTimeField('添加时间', default=datetime.datetime.now)
+
+    class Meta:
+        ordering = ('-date_joined',)
+
+    def IP_state_data(self):
+        IP_state_data = anyjson.loads(self.IP_state)
+        return IP_state_data
+
+
+    def domain_state_data(self):
+        domain_state_data = anyjson.loads(self.domain_state)
+        return domain_state_data
+
+    def URL_state_data(self):
+        URL_state_data = anyjson.loads(self.URL_state)
+        return URL_state_data
 

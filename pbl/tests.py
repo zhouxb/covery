@@ -17,7 +17,6 @@ class SimpleTest(TestCase):
                 )
 
         result = anyjson.loads(response.content)
-        print result
         expect = {
                     'operator':'CT',
                     'IP':['127.0.0.1', '192.168.0.1'],
@@ -46,3 +45,19 @@ class SimpleTest(TestCase):
         assert result['status'] == 'success'
         assert state == expect
 
+    def test_state_scheduel_create_on_success(self):
+        response = self.c.post(
+                    reverse('pbl:state_schedule_create'),
+                        {
+                            'IP_state':'ok',
+                            'domain_state':'ok',
+                            'URL_state':'ok',
+                            }
+                        )
+
+        result = anyjson.loads(response.content)
+        state = State.objects.values('IP_state', 'domain_state', 'URL_state')[0]
+        expect = {'domain_state': u'ok', 'URL_state': u'ok', 'IP_state': u'ok'}
+
+        assert result['status'] == 'success'
+        assert state == expect
