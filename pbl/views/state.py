@@ -51,10 +51,12 @@ def show_json(request, id):
     return json_response(response)
 
 def delete(request, id):
+    response = {'result':'failure'}
     try:
         State.objects.get(id=id).delete()
-        messages.success(request, '删除成功!')
+        response = {'result':'success'}
     except:
-        messages.error(request, '删除失败!')
+        pass
 
-    return HttpResponseRedirect(reverse('pbl:state_index'))
+    #return HttpResponseRedirect(reverse('pbl:state_index'))
+    return json_response(response)

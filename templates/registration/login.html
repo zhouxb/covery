@@ -5,7 +5,7 @@
 
 <div class="container">
 <!--<div class="hero-unit">-->
-    <img src="{{ STATIC_URL }}icons/header.jpg" alt="">
+    <img src="{{ STATIC_URL }}icons/trolley.jpg" alt="">
 <!--</div>-->
 
 <div class="row">
@@ -14,13 +14,11 @@
         <dl>
             <dt>登入系统</dt>
             <dd>以ChinaCache的邮箱名和密码即可登入</dd>
-            <dt>设备管理</dt>
-            <dd>核对自己内部使用测试机是否登记,并可以使用</dd>
         </dl>
 
     </div>
     <div class="span5 offset3">
-        <form class="from-horizontal" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        <form class="from-horizontal well" method="post" action="{% url 'django.contrib.auth.views.login' %}">
             {% csrf_token %}
             <fieldset>
                 {% if form.errors %}
@@ -42,7 +40,7 @@
                 </div>
 
                 <div class="from-actions">
-                    <input class="btn btn-large btn-success" type="submit" value="login" />
+                    <input class="btn btn-success" type="submit" value="login" />
                     <input type="hidden" name="next" value="{{ next }}" />
                 </div>
             </fieldset>

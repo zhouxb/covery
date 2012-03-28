@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+
 {% load url from future %}
 {% url 'pbl:survey_set' as pbl_survey_set_url %}
 
@@ -15,7 +16,6 @@
         </div>
 
         <div class="span9">
-            {% include "util/imessage.html" %}
             <div id="survey_set"></div>
 
             <table class="table table-striped table-bordered table-condensed">
@@ -28,12 +28,12 @@
                 </thead>
                 <tbody>
                     {% for state in states %}
-                    <tr>
+                    <tr id="tr_state_{{state.id}}">
                         <td><input type='checkbox' id='{{ state.id }}' name='item_id'/></td>
                         <td>{{ state.date_joined|date:"Y-m-d H:i:s" }}</td>
                         <td>
                             <a href="{% url 'pbl:state_show' state.id %}"><i class="icon-signal"></i></a>
-                            <a href="#" onclick="remove('{% url "pbl:state_delete" state.id %}');"><i class="icon-trash"></i></a>
+                            <a href="#" onclick="remove('{% url "pbl:state_delete" state.id %}', {{ state.id }});"><i class="icon-trash"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -51,10 +51,16 @@
         });
     })
 
-    function remove(url){
+    function remove(url, id){
         bootbox.confirm("你确定删除么?", function(result){
             if (result) {
-                location.href = url
+                $.get(url, function(data){
+                    if(data["result"]=="success"){
+                        $("#tr_state_" + id).fadeOut(1000, function(){ $("#tr_state_" + id).remove });
+                    }else{
+                        imessage("删除失败", "error");
+                    }
+                })
             } else {
             }
         });

@@ -1,0 +1,9 @@
+<uwsgi>
+    <socket>127.0.0.1:9000</socket>
+    <master/>
+    <chdir>/var/www/covery</chdir>
+    <pythonpath>..</pythonpath>
+    <processes>8</processes>
+    <module>covery_uwsgi</module>
+    <daemonize>/var/log/covery.log</daemonize>
+</uwsgi>
