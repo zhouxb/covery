@@ -187,6 +187,7 @@ INSTALLED_APPS = (
     'crawler',
     'domain',
     'pbl',
+    'mail',
 )
 
 if DEBUG:
@@ -288,4 +289,7 @@ CELERY_ROUTES = {
         'routing_key':'pbl.probe',
     },
 }
+
+# Mail config
+SMTP_HOST = 'corp.chinacache.com'
 

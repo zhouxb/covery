@@ -3,6 +3,9 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from contrib.shortcuts import json_response
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.contrib import messages
 from pbl.forms import StateForm
 from pbl.models import Survey, State
 import anyjson
@@ -43,43 +46,15 @@ def show_json(request, id):
     type = request.GET.get('type', '')
 
     state = State.objects.get(id=id)
+    response = state.build_data(type)
 
-    if type == 'ip':
-        IP_state_data = state.IP_state_data()
+    return json_response(response)
 
-        categories = []
-        series = []
-        avg = []
-        max = []
-        for item in IP_state_data:
-            if item['rate'] != 1:
-                categories.append(item['ip'])
-                avg.append(item['avg'])
-                max.append(item['max'])
-        series = [{'name':'avg', 'data':avg}, {'name':'max', 'data':max}]
+def delete(request, id):
+    try:
+        State.objects.get(id=id).delete()
+        messages.success(request, '删除成功!')
+    except:
+        messages.error(request, '删除失败!')
 
-
-    if type == 'domain':
-        domain_state_data = state.domain_state_data()
-        categories = []
-        time = []
-        series = []
-
-        for item in domain_state_data:
-            categories.append(item['domain'])
-            time.append(item['time'])
-        series = [{'name':'time', 'data':time}]
-
-    if type == 'url':
-        URL_state_data = state.URL_state_data()
-        categories = []
-        speed = []
-        series = []
-
-        for item in URL_state_data:
-            categories.append(item['url'])
-            speed.append(item['speed'])
-        series = [{'name':'time', 'data':speed}]
-
-    return json_response({'categories':categories, 'series':series})
-
+    return HttpResponseRedirect(reverse('pbl:state_index'))

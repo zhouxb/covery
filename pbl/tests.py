@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 import anyjson
 from pbl.models import Survey, State
 
-class SimpleTest(TestCase):
+class PblTest(TestCase):
     fixtures = ['survey_testdata.json']
     def setUp(self):
         self.c = Client()

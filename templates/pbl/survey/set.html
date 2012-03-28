@@ -1,68 +1,46 @@
-{% extends 'base.html' %}
-
-{% block nav %}
-{% include "nav.html" %}
-{% endblock %}
-
-{% block content %}
 {% load url from future %}
 {% url 'pbl:survey_set_run_now' as pbl_survey_set_run_now %}
 {% url 'pbl:survey_set_run_time' as pbl_survey_set_run_time %}
 
-
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span3">
-    {% include "pbl/sidebar.html" %}
-  </div>
-
-    <div class="span9">
-      {% include "util/imessage.html" %}
-      <h2>PBL回源探测</h2>
-      <div class="well">
-        <a id="run_now" href="#" class="btn btn-info" rel="popover" title="提示:" data-content="PBL回源探测任务立刻执行!">
-          <i class="icon-chevron-down icon-white"></i> Run Now</a>
-      </div>
-      <form id="run_time_form" class="well form-inline">
-        {% csrf_token %}
-        <label class="control-label">minute: </label>
-        <input id="minute" name="minute" type="text" class="input-small" placeholder="每隔多少分钟" value="{{ minute }}">
-        <!--<label class="control-label">hour: </label>-->
-        <!--<input id="hour" name="hour" type="text" class="input-small" placeholder="每隔多少小时" value="{{ hour }}">-->
-        <button id="run_time" type="submit" class="btn btn-info" rel="popover" title="提示:" data-content="PBL回源探测任务周期执行<br/>分钟: 必须为1~59<br/>小时: *或1~23 *代表所有">
-          <i class="icon-refresh icon-white"></i> Run Time
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
+<form id="run_time_form" class="well form-inline">
+    {% csrf_token %}
+    <label class="control-label">minute: </label>
+    <input id="minute" name="minute" type="text" class="input-small" placeholder="每隔多少分钟" value="{{ minute }}">
+    <!--<label class="control-label">hour: </label>-->
+    <!--<input id="hour" name="hour" type="text" class="input-small" placeholder="每隔多少小时" value="{{ hour }}">-->
+    <button id="run_time" type="submit" class="btn btn-info" rel="popover"
+        title="提示:" data-content="PBL回源探测任务周期执行<br/>每隔多少分钟: 必须为1~59<br/>">
+        <i class="icon-refresh icon-white"></i> Run Time
+    </button>
+    <a id="run_now" href="#" class="btn btn-info" rel="popover" title="提示:" data-content="PBL回源探测任务立刻执行!">
+        <i class="icon-chevron-down icon-white"></i> Run Now
+    </a>
+</form>
 
 <script>
-  $(document).ready(function(){
-    $('#run_now').popover()
-    $('#run_time').popover()
+    $(document).ready(function(){
+        $('#run_now').popover()
+        $('#run_time').popover()
 
-    $('#run_now').click(function(){
-      $.get("{{ pbl_survey_set_run_now}}", function(data){
-        imessage(data['message'], data['type']);
-      })
+        $('#run_now').click(function(){
+            $.get("{{ pbl_survey_set_run_now}}", function(data){
+                imessage(data['message'], data['type']);
+            })
+        })
+
+        $('#run_time_form').submit(function(e){
+            e.preventDefault();
+            form_data = $('#run_time_form').serialize()
+            $.ajax({
+                type:"POST",
+                url:"{{ pbl_survey_set_run_time }}",
+                data:form_data,
+                success:function(data){
+                    imessage(data['message'], data['type']);
+                }
+            });
+        })
+
     })
-
-    $('#run_time_form').submit(function(e){
-        e.preventDefault();
-        form_data = $('#run_time_form').serialize()
-        $.ajax({
-          type:"POST",
-          url:"{{ pbl_survey_set_run_time }}",
-          data:form_data,
-          success:function(data){
-            imessage(data['message'], data['type']);
-          }
-        });
-    })
-
-  })
 </script>
-
-{% endblock %}
 

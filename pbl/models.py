@@ -28,16 +28,32 @@ class State(models.Model):
     class Meta:
         ordering = ('-date_joined',)
 
-    def IP_state_data(self):
-        IP_state_data = anyjson.loads(self.IP_state)
-        return IP_state_data
+    def build_data(self, type):
+        if type == "ip":
+            categories, series, avg, max = [], [], [], []
 
+            for item in anyjson.loads(self.IP_state):
+                if item['rate'] != 1:
+                    categories.append(item['ip'])
+                    avg.append(item['avg'])
+                    max.append(item['max'])
+            series = [{'name':'avg', 'data':avg}, {'name':'max', 'data':max}]
 
-    def domain_state_data(self):
-        domain_state_data = anyjson.loads(self.domain_state)
-        return domain_state_data
+        if type == 'domain':
+            categories, time, series = [], [], []
 
-    def URL_state_data(self):
-        URL_state_data = anyjson.loads(self.URL_state)
-        return URL_state_data
+            for item in anyjson.loads(self.domain_state):
+                categories.append(item['domain'])
+                time.append(item['time'])
+            series = [{'name':'time', 'data':time}]
+
+        if type == 'url':
+            categories, speed, series = [], [], []
+
+            for item in anyjson.loads(self.URL_state):
+                categories.append(item['url'])
+                speed.append(item['speed'])
+            series = [{'name':'time', 'data':speed}]
+
+        return {'categories':categories, 'series':series}
 

@@ -16,9 +16,11 @@ urlpatterns = patterns('',
     url(r'^account/', include('account.urls', namespace='account', app_name='account')),
     url(r'^crawler/', include('crawler.urls', namespace='crawler', app_name='crawler')),
     url(r'^domain/', include('domain.urls', namespace='domain', app_name='domain')),
-
     url(r'^pbl/', include('pbl.urls', namespace='pbl', app_name='pbl')),
+    url(r'^mail/', include('mail.urls', namespace='mail', app_name='mail')),
+
     url(r'^sample/', include('sample.urls', namespace='sample', app_name='sample')),
+
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT }),
 )
 

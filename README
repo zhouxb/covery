@@ -11,6 +11,7 @@ Ubuntu
 sudo apt-get build-dep python-ldap
 
 2. 安装celery & rabbitmq
+sudo apt-get install rabbitmq-server
 pass
 
 3. 安装haystack

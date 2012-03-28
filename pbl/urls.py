@@ -15,4 +15,5 @@ urlpatterns += patterns('pbl.views.state',
     url(r'^state/(?P<id>\d+)/create$', 'create', name='state_create'),
     url(r'^state/(?P<id>\d+)/show$', 'show', name='state_show'),
     url(r'^state/(?P<id>\d+)/show_json$', 'show_json', name='state_show_json'),
+    url(r'^state/(?P<id>\d+)/delete$', 'delete', name='state_delete'),
 )

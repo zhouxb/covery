@@ -6,6 +6,7 @@
 
 {% block content %}
 {% load url from future %}
+{% url 'pbl:survey_set' as pbl_survey_set_url %}
 
 <div class="container-fluid">
     <div class="row-fluid">
@@ -15,13 +16,14 @@
 
         <div class="span9">
             {% include "util/imessage.html" %}
+            <div id="survey_set"></div>
 
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
                     <tr>
                         <th width="15"><input type='checkbox' id='select' name='all_id'/></th>
                         <th>探测时间</th>
-                        <th width="60">操作</th>
+                        <th width="40">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +33,7 @@
                         <td>{{ state.date_joined|date:"Y-m-d H:i:s" }}</td>
                         <td>
                             <a href="{% url 'pbl:state_show' state.id %}"><i class="icon-signal"></i></a>
+                            <a href="#" onclick="remove('{% url "pbl:state_delete" state.id %}');"><i class="icon-trash"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -42,6 +45,20 @@
 
 
 <script>
+    $("document").ready(function(){
+        $("#survey_set").load("{{ pbl_survey_set_url }}", function(){
+            $(this).fadeIn();
+        });
+    })
+
+    function remove(url){
+        bootbox.confirm("你确定删除么?", function(result){
+            if (result) {
+                location.href = url
+            } else {
+            }
+        });
+    }
 </script>
 
 {% endblock %}

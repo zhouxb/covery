@@ -51,8 +51,9 @@ def run_now(request):
     id = state.id
 
     tasks.probe.apply_async(args=[
-        'http://192.168.10.98:8000/pbl/survey/show',
-        'http://192.168.10.98:8000/pbl/state/%s/create' % id
+        'http://192.168.10.39:8000/pbl/survey/show',
+        'http://192.168.10.39:8000/pbl/state/%s/create' % id,
+        'http://192.168.10.39:8000/mail/create'
     ])
 
     return json_response({'message':'任务已经下发', 'type':'success'})
@@ -66,8 +67,9 @@ def run_time(request):
         survey.save()
 
         tasks.schedule.apply_async(args=[
-            'http://192.168.10.98:8000/pbl/survey/show',
-            'http://192.168.10.98:8000/pbl/state/schedule/create',
+            'http://192.168.10.39:8000/pbl/survey/show',
+            'http://192.168.10.39:8000/pbl/state/schedule/create',
+            'http://192.168.10.39:8000/mail/create',
             minute
         ])
         response = {'message':'周期任务已下发', 'type':'success'}
