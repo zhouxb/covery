@@ -1,4 +1,5 @@
 {% load url from future %}
+{% url 'isp:province_index' as isp_province_index_url %}
 {% url 'crawler:index' as crawler_index_url %}
 {% url 'domain:index' as domain_index_url %}
 {% url 'pbl:survey_index' as pbl_survey_index_url %}
@@ -14,6 +15,9 @@
             <a class="brand" href="#">Covery</a>
             <div class="nav-collapse">
                 <ul class="nav">
+                    <li>
+                        <a href="{{ isp_province_index_url }}">ISP</b></a>
+                    </li>
                     <li>
                         <a href="{{ domain_index_url }}">域名</b></a>
                     </li>

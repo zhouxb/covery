@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+{% include "nav.html" %}
+{% endblock %}
+
+{% block content %}
+
+{% load url from future %}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+        {% include "isp/sidebar.html" %}
+        </div>
+
+        <div class="span9">
+
+            <h3>{{ province.name }}</h3>
+            {% include "isp/device/new.html" %}
+            <table id="device_table" class="table table-striped table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th width="15"><input type='checkbox' id='select' name='all_id'/></th>
+                        <th>名称</th>
+                        <th>SN</th>
+                        <th width="40">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="device_tbody">
+                    {% for device in devices %}
+                    <tr id="tr_device_{{device.id}}">
+                        <td><input type='checkbox' id='{{ device.id }}' name='item_id'/></td>
+                        <td>{{ device.name }}</td>
+                        <td>{{ device.sn }}</td>
+                        <td>
+                            <a href="#" onclick="remove('{% url "isp:device_delete" province.id device.id %}', {{ device.id }});"><i class="icon-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function remove(url, id){
+        bootbox.confirm("你确定删除么?", function(result){
+            if (result) {
+                $.get(url, function(data){
+                    if(data["result"]=="success"){
+                        $("#tr_device_" + id).fadeOut(1000, function(){ $("#tr_device_" + id).remove });
+                    }else{
+                        imessage("删除失败", "error");
+                    }
+                })
+            } else {
+            }
+        });
+    }
+</script>
+
+{% endblock %}
+

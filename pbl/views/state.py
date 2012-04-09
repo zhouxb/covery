@@ -5,7 +5,6 @@ from django.shortcuts import render
 from contrib.shortcuts import json_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib import messages
 from pbl.forms import StateForm
 from pbl.models import Survey, State
 import anyjson

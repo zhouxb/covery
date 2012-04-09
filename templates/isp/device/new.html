@@ -1,0 +1,45 @@
+{% load url from future %}
+
+<div class="btn-toolbar" style="margin-bottom: 9px">
+    <div class="btn-group">
+        <a class="btn btn-primary" href="#" onclick="a_new();"><i class="icon-plus icon-white"></i> 添加设备</a>
+    </div>
+</div>
+
+<div id="myModal" class="modal hide fade">
+    <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a> 
+        <h3>添加设备</h3>
+    </div>
+    <div class="modal-body">
+
+        <form id="province_create_form" class="form-horizontal" action="{% url 'isp:device_create' province.id %}" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label">名称</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" name="name">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">SN</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" name="sn">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">取消</a>
+                    <button class="btn btn-primary" type="submit">保存</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<script>
+    function a_new(){
+        $('#myModal').modal('show')
+    }
+</script>
+

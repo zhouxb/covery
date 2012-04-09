@@ -1,0 +1,40 @@
+{% load url from future %}
+{% url 'isp:province_create' as isp_province_create_url %}
+
+<div class="btn-toolbar" style="margin-bottom: 9px">
+    <div class="btn-group">
+        <a class="btn btn-primary" href="#" onclick="a_new();"><i class="icon-plus icon-white"></i> 添加运营商</a>
+    </div>
+</div>
+
+<div id="myModal" class="modal hide fade">
+    <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">&times;</a> 
+        <h3>添加运营商</h3>
+    </div>
+    <div class="modal-body">
+
+        <form id="province_create_form" class="form-horizontal" action="{{ isp_province_create_url }}" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label">名称</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" name="name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">取消</a>
+                    <button class="btn btn-primary" type="submit">保存</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<script>
+    function a_new(){
+        $('#myModal').modal('show')
+    }
+</script>
+

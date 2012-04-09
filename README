@@ -16,7 +16,7 @@ uwsgi
 django-celery=2.5.1
 
 django-auth-ldap
-#python-ldap
+python-ldap
 
 django-haystack==1.2.6
 whoosh==2.3.2
@@ -30,10 +30,9 @@ Ubuntu
 sudo apt-get build-dep python-ldap
 
 CentOS
-yum install python-ldap
-yum install openldap24-libs-devel
+OpenLDAP 2.4.11 +
 
-3. 安装rabbitmq
+3. 安装rabbitmq == 2.8.1
 sudo apt-get install rabbitmq-server
 yum install rabbitmq-server
 
@@ -48,3 +47,18 @@ yum install rabbitmq-server
 2. rabbitmq server
 
 3. scrapy
+
+
+rabbitmq使用
+
+rabbitmqctl add_user
+rabbitmqctl set_user_tags
+
+configuration & environment variables
+/etc/rabbitmq/rabbitmq.config
+/etc/rabbitmq/rabbitmq-env.config
+
+log
+/var/log/rabbitmq
+
+

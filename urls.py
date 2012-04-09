@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^domain/', include('domain.urls', namespace='domain', app_name='domain')),
     url(r'^pbl/', include('pbl.urls', namespace='pbl', app_name='pbl')),
     url(r'^mail/', include('mail.urls', namespace='mail', app_name='mail')),
+    url(r'^isp/', include('isp.urls', namespace='isp', app_name='isp')),
 
     url(r'^sample/', include('sample.urls', namespace='sample', app_name='sample')),
 

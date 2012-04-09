@@ -1,0 +1,12 @@
+[
+    {
+        "pk": 1,
+        "model": "isp.device",
+        "fields":
+            {
+                "province":1,
+                "name": "FC设备01",
+                "sn":"sn01"
+            }
+    }
+]

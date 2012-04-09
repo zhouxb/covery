@@ -1,0 +1,23 @@
+{% load url from future %}
+{% url 'isp:province_index' as isp_province_index_url %}
+
+<div class="well sidebar-nav">
+  <ul class="nav nav-list">
+    <li id="_isp_province">
+    <a href="{{ isp_province_index_url }}"> <i class="icon-home"></i> 首页</a>
+    </li>
+  </ul>
+</div>
+
+<script>
+  $(document).ready(function(){
+    var pathname = window.location.pathname;
+    var path_name = pathname.split("/")
+    var name = "_" + path_name[1] + "_" + path_name[2]
+
+    if(name=="_isp_provinces"){
+        name = "_isp_province"
+    }
+    $("#" + name).addClass("active");
+  })
+</script>
