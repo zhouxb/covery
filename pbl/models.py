@@ -2,6 +2,7 @@
 
 import datetime
 from django.db import models
+from isp.models import Province, Device
 import anyjson
 
 class Survey(models.Model):
@@ -11,6 +12,7 @@ class Survey(models.Model):
             ('CMCC', '中国移动'),
     )
 
+    province = models.ForeignKey(Province, null=True)
     operator = models.CharField('运营商', max_length=4, choices=OPERATOR)
     IP = models.TextField('IP列表')
     domain = models.TextField('域名列表')
@@ -20,6 +22,7 @@ class Survey(models.Model):
 
 class State(models.Model):
     survey = models.ForeignKey(Survey, null=True)
+    device = models.ForeignKey(Device, null=True)
     IP_state = models.TextField('IP探测状态', null=True)
     domain_state = models.TextField('解析探测状态', null=True)
     URL_state = models.TextField('URL探测状态', null=True)

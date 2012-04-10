@@ -29,8 +29,18 @@ def create(request):
 def show(request, id):
     pass
 
-def update(request):
-    pass
+def update(request, id):
+    name = request.POST.get('name', '')
+    province = Province.objects.get(id=id)
+    province.name = name
+
+    try:
+        province.save()
+        messages.success(request, '更新成功!')
+    except IntegrityError, e:
+        messages.error(request, '更新失败,运营商名称已经存在!')
+
+    return HttpResponseRedirect(reverse('isp:province_index'))
 
 def delete(request, id):
     try:
