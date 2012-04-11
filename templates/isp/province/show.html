@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+{% include "nav.html" %}
+{% endblock %}
+
+{% block content %}
+
+{% load url from future %}
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3">
+      {% include "isp/sidebar.html" %}
+    </div>
+
+    <div class="span9">
+
+      <form class="well from-search" action="{% url 'isp:province_show' %}" method="GET">
+        <input name="q" type="text" class="input-medium search-query span9" placeholder="设备SN" value="{{ q }}">
+        <button type="submit" class="btn"><i class="icon-search"></i> 查询</button>
+      </form>
+
+      {% include "isp/province/new.html" %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th width="150">运营商</th>
+            <th>设备名称</th>
+            <th>设备SN</th>
+          </tr>
+        </thead>
+        <tbody id="province_tbody">
+          {% for device in devices %}
+          <tr>
+            <td><a href="{% url 'isp:device_index' device.province.id %}">{{ device.province.name }}</a></td>
+            <td>{{ device.name }}</td>
+            <td>{{ device.sn }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

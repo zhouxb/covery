@@ -16,6 +16,11 @@
 
     <div class="span9">
 
+      <form class="well from-search" action="{% url 'isp:province_show' %}" method="GET">
+        <input name="q" type="text" class="input-medium search-query span9" placeholder="设备SN">
+        <button type="submit" class="btn"><i class="icon-search"></i> 查询</button>
+      </form>
+
       {% include "isp/province/new.html" %}
       <table id="province_table" class="table table-striped table-bordered table-condensed">
         <thead>

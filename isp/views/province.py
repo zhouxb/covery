@@ -8,12 +8,23 @@ from django.contrib import messages
 from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 from isp.models import Province
+from isp.helpers import province_helper
 import anyjson
 
 def index(request, template_name='isp/province/index.html'):
+
     provinces = Province.objects.all()
 
     return render(request, template_name, {'provinces':provinces})
+
+def show(request, template_name='isp/province/show.html'):
+    q = request.GET.get('q', '')
+
+    if q:
+        devices = province_helper.search(q)
+        return render(request, template_name, {'devices':devices, 'q':q})
+    else:
+        return HttpResponseRedirect(reverse('isp:province_index'))
 
 def create(request):
     name = request.POST.get('name', '')
@@ -25,9 +36,6 @@ def create(request):
         messages.error(request, '添加失败,运营商已经存在!')
 
     return HttpResponseRedirect(reverse('isp:province_index'))
-
-def show(request, id):
-    pass
 
 def update(request, id):
     name = request.POST.get('name', '')
