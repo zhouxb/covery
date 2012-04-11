@@ -61,3 +61,4 @@ class PblTest(TestCase):
 
         assert result['status'] == 'success'
         assert state == expect
+

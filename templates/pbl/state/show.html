@@ -5,48 +5,94 @@
 {% endblock %}
 
 {% block content %}
+
 {% load url from future %}
+{% url 'pbl:survey_set_run_now' as pbl_survey_set_run_now %}
+{% url 'pbl:survey_set_run_time' as pbl_survey_set_run_time %}
 
 <div class="container-fluid">
     <div class="row-fluid">
-
         <div class="span3">
-            {% include "pbl/sidebar.html" %}
+            {% include "isp/sidebar.html" %}
         </div>
 
         <div class="span9">
-            <div class="page-header">
-                <h4>IP探测</h4>
-                <div id="ip_chart_container" style="height: 200px"></div>
-            </div>
-            <div class="page-header">
-                <h4>域名探测</h4>
-            <div id="domain_chart_container" style="height: 200px"></div>
-            </div>
-            <div class="page-header">
-                <h4>URL探测</h4>
-            <div id="url_chart_container" style="height: 200px"></div>
-            </div>
-        </div>
 
+            <h3>{{ province.name }} : {{ device.sn }}</h3>
+            <div class="btn-toolbar" style="margin-bottom: 9px">
+                <div class="btn-group">
+                    <a id="run_now" href="#" class="btn btn-info" rel="popover" title="提示:" data-content="PBL回源探测任务立刻执行!">
+                        <i class="icon-chevron-down icon-white"></i> Run Now
+                    </a>
+                </div>
+            </div>
+
+            <table class="table table-striped table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th width="15"><input type='checkbox' id='select' name='all_id'/></th>
+                        <th>探测时间</th>
+                        <th width="40">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for state in states %}
+                    <tr id="tr_state_{{state.id}}">
+                        <td><input type='checkbox' id='{{ state.id }}' name='item_id'/></td>
+                        <td>{{ state.date_joined|date:"Y-m-d H:i:s" }}</td>
+                        <td>
+                            <a href="{% url 'pbl:state_show' state.id %}"><i class="icon-signal"></i></a>
+                            <a href="#" onclick="remove('{% url "pbl:state_delete" state.id %}', {{ state.id }});"><i class="icon-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-<script src="{{ STATIC_URL }}js/highcharts.js"></script>
-<script src="{{ STATIC_URL }}js/chart/pbl_state_chart.js"></script>
 <script>
-    $.get("{% url 'pbl:state_show_json' id %}", {'type':'ip'}, function(data){
-        draw_ip_state(data['categories'], data['series'], 'ip_chart_container');
-    });
 
-    $.get("{% url 'pbl:state_show_json' id %}", {'type':'domain'}, function(data){
-        draw_domain_state(data['categories'], data['series'], 'domain_chart_container');
-    });
+    function remove(url, id){
+        bootbox.confirm("你确定删除么?", function(result){
+            if (result) {
+                $.get(url, function(data){
+                    if(data["result"]=="success"){
+                        $("#tr_state_" + id).fadeOut(1000, function(){ $("#tr_state_" + id).remove });
+                        }else{
+                        imessage("删除失败", "error");
+                    }
+                })
+                } else {
+            }
+        });
+    }
 
-    $.get("{% url 'pbl:state_show_json' id %}", {'type':'url'}, function(data){
-        draw_url_state(data['categories'], data['series'], 'url_chart_container');
-    });
+    $(document).ready(function(){
+        $('#run_now').popover()
+        $('#run_time').popover()
 
+        $('#run_now').click(function(){
+            $.get("{{ pbl_survey_set_run_now}}", function(data){
+                imessage(data['message'], data['type']);
+            })
+        })
+
+        $('#run_time_form').submit(function(e){
+            e.preventDefault();
+            form_data = $('#run_time_form').serialize()
+            $.ajax({
+                type:"POST",
+                url:"{{ pbl_survey_set_run_time }}",
+                data:form_data,
+                success:function(data){
+                    imessage(data['message'], data['type']);
+                }
+            });
+        })
+
+    })
 </script>
 
 {% endblock %}

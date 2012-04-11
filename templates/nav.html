@@ -2,7 +2,7 @@
 {% url 'isp:province_index' as isp_province_index_url %}
 {% url 'crawler:index' as crawler_index_url %}
 {% url 'domain:index' as domain_index_url %}
-{% url 'pbl:survey_index' as pbl_survey_index_url %}
+{% url 'pbl:isp_index' as pbl_isp_index_url %}
 
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
@@ -23,9 +23,6 @@
                     </li>
                     <li>
                         <a href="{{ crawler_index_url }}">爬虫</b></a>
-                    </li>
-                    <li>
-                        <a href="{{ pbl_survey_index_url }}">PBL探测</b></a>
                     </li>
                 </ul>
                 <ul class="nav pull-right">

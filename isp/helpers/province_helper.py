@@ -4,7 +4,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from isp.models import Device
 
 def search(q):
-    print q
     devices = []
     q_s = filter(lambda x:x!='', q.split(' '))
 

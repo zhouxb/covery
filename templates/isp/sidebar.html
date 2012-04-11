@@ -1,10 +1,14 @@
 {% load url from future %}
 {% url 'isp:province_index' as isp_province_index_url %}
+{% url 'pbl:isp_index' as pbl_isp_index_url %}
 
 <div class="well sidebar-nav">
   <ul class="nav nav-list">
     <li id="_isp_province">
     <a href="{{ isp_province_index_url }}"> <i class="icon-home"></i> 首页</a>
+    </li>
+    <li id="_pbl_isp">
+    <a href="{{ pbl_isp_index_url }}"><i class="icon-check"></i> PBL探测</a>
     </li>
   </ul>
 </div>

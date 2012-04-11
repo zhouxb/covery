@@ -7,21 +7,40 @@
 {% block content %}
 
 {% load url from future %}
-{% url 'pbl:survey_set' as pbl_survey_set_url %}
+{% url 'pbl:survey_set_run_now' as pbl_survey_set_run_now %}
+{% url 'pbl:survey_set_run_time' as pbl_survey_set_run_time %}
+
+
 
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span3">
-        {% include "pbl/sidebar.html" %}
+            {% include "isp/sidebar.html" %}
         </div>
 
         <div class="span9">
-            <div id="survey_set"></div>
+            <h3>{{ province.name }}</h3>
+
+            <form id="run_time_form" class="well form-inline">
+                {% csrf_token %}
+                <label class="control-label">minute: </label>
+                <input id="minute" name="minute" type="text" class="input-small" placeholder="每隔多少分钟" value="{{ minute }}">
+                <!--<label class="control-label">hour: </label>-->
+                <!--<input id="hour" name="hour" type="text" class="input-small" placeholder="每隔多少小时" value="{{ hour }}">-->
+                <button id="run_time" type="submit" class="btn btn-info" rel="popover"
+                    title="提示:" data-content="PBL回源探测任务周期执行<br/>每隔多少分钟: 必须为1~59<br/>">
+                    <i class="icon-refresh icon-white"></i> Run Time
+                </button>
+                <a id="run_now" href="#" class="btn btn-info" rel="popover" title="提示:" data-content="PBL回源探测任务立刻执行!">
+                    <i class="icon-chevron-down icon-white"></i> Run Now
+                </a>
+            </form>
 
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
                     <tr>
                         <th width="15"><input type='checkbox' id='select' name='all_id'/></th>
+                        <th>设备SN</th>
                         <th>探测时间</th>
                         <th width="40">操作</th>
                     </tr>
@@ -30,6 +49,7 @@
                     {% for state in states %}
                     <tr id="tr_state_{{state.id}}">
                         <td><input type='checkbox' id='{{ state.id }}' name='item_id'/></td>
+                        <td>{{ state.device.sn }}</td>
                         <td>{{ state.date_joined|date:"Y-m-d H:i:s" }}</td>
                         <td>
                             <a href="{% url 'pbl:state_show' state.id %}"><i class="icon-signal"></i></a>
@@ -43,13 +63,7 @@
     </div>
 </div>
 
-
 <script>
-    $("document").ready(function(){
-        $("#survey_set").load("{{ pbl_survey_set_url }}", function(){
-            $(this).fadeIn();
-        });
-    })
 
     function remove(url, id){
         bootbox.confirm("你确定删除么?", function(result){
@@ -57,14 +71,39 @@
                 $.get(url, function(data){
                     if(data["result"]=="success"){
                         $("#tr_state_" + id).fadeOut(1000, function(){ $("#tr_state_" + id).remove });
-                    }else{
+                        }else{
                         imessage("删除失败", "error");
                     }
                 })
-            } else {
+                } else {
             }
         });
     }
+
+    $(document).ready(function(){
+        $('#run_now').popover()
+        $('#run_time').popover()
+
+        $('#run_now').click(function(){
+            $.get("{{ pbl_survey_set_run_now}}", function(data){
+                imessage(data['message'], data['type']);
+            })
+        })
+
+        $('#run_time_form').submit(function(e){
+            e.preventDefault();
+            form_data = $('#run_time_form').serialize()
+            $.ajax({
+                type:"POST",
+                url:"{{ pbl_survey_set_run_time }}",
+                data:form_data,
+                success:function(data){
+                    imessage(data['message'], data['type']);
+                }
+            });
+        })
+
+    })
 </script>
 
 {% endblock %}

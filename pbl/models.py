@@ -12,7 +12,7 @@ class Survey(models.Model):
             ('CMCC', '中国移动'),
     )
 
-    province = models.ForeignKey(Province, null=True)
+    province = models.ForeignKey(Province, null=True, unique=True)
     operator = models.CharField('运营商', max_length=4, choices=OPERATOR)
     IP = models.TextField('IP列表')
     domain = models.TextField('域名列表')

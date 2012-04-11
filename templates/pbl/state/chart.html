@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+{% include "nav.html" %}
+{% endblock %}
+
+{% block content %}
+{% load url from future %}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <div class="span3">
+            {% include "isp/sidebar.html" %}
+        </div>
+
+        <div class="span9">
+            <div class="page-header">
+                <h4>IP探测</h4>
+                <div id="ip_chart_container" style="height: 200px"></div>
+            </div>
+            <div class="page-header">
+                <h4>域名探测</h4>
+            <div id="domain_chart_container" style="height: 200px"></div>
+            </div>
+            <div class="page-header">
+                <h4>URL探测</h4>
+            <div id="url_chart_container" style="height: 200px"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="{{ STATIC_URL }}js/highcharts.js"></script>
+<script src="{{ STATIC_URL }}js/chart/pbl_state_chart.js"></script>
+<script>
+    $.get("{% url 'pbl:state_show_json' id %}", {'type':'ip'}, function(data){
+        draw_ip_state(data['categories'], data['series'], 'ip_chart_container');
+    });
+
+    $.get("{% url 'pbl:state_show_json' id %}", {'type':'domain'}, function(data){
+        draw_domain_state(data['categories'], data['series'], 'domain_chart_container');
+    });
+
+    $.get("{% url 'pbl:state_show_json' id %}", {'type':'url'}, function(data){
+        draw_url_state(data['categories'], data['series'], 'url_chart_container');
+    });
+
+</script>
+
+{% endblock %}
+

@@ -144,8 +144,8 @@ AUTH_LDAP_USER_ATTR_MAP = {
 }
 
 AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'django_auth_ldap.backend.LDAPBackend',
 )
 
 LOGIN_URL = '/accounts/login'
@@ -293,4 +293,10 @@ CELERY_ROUTES = {
 
 # Mail config
 SMTP_HOST = 'corp.chinacache.com'
+
+# Native address
+ip = os.popen("/sbin/ifconfig | grep 'inet addr' | grep -v '127.0.0.1' | awk '{print $2}'").read()
+IP= ip[ip.find(':')+1:ip.find('\n')]
+PORT = 80
+API_ADDRESS = 'http://%s:%s' % (IP, PORT)
 
