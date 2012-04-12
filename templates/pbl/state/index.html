@@ -25,15 +25,10 @@
                 {% csrf_token %}
                 <label class="control-label">minute: </label>
                 <input id="minute" name="minute" type="text" class="input-small" placeholder="每隔多少分钟" value="{{ minute }}">
-                <!--<label class="control-label">hour: </label>-->
-                <!--<input id="hour" name="hour" type="text" class="input-small" placeholder="每隔多少小时" value="{{ hour }}">-->
                 <button id="run_time" type="submit" class="btn btn-info" rel="popover"
                     title="提示:" data-content="PBL回源探测任务周期执行<br/>每隔多少分钟: 必须为1~59<br/>">
-                    <i class="icon-refresh icon-white"></i> Run Time
+                    <i class="icon-refresh icon-white"></i> 周期执行
                 </button>
-                <a id="run_now" href="#" class="btn btn-info" rel="popover" title="提示:" data-content="PBL回源探测任务立刻执行!">
-                    <i class="icon-chevron-down icon-white"></i> Run Now
-                </a>
             </form>
 
             <table class="table table-striped table-bordered table-condensed">
@@ -49,10 +44,10 @@
                     {% for state in states %}
                     <tr id="tr_state_{{state.id}}">
                         <td><input type='checkbox' id='{{ state.id }}' name='item_id'/></td>
-                        <td>{{ state.device.sn }}</td>
+                        <td><a href="{% url 'pbl:state_show' state.device.province.id state.device.id %}">{{ state.device.sn }}</a></td>
                         <td>{{ state.date_joined|date:"Y-m-d H:i:s" }}</td>
                         <td>
-                            <a href="{% url 'pbl:state_show' state.id %}"><i class="icon-signal"></i></a>
+                            <a href="{% url 'pbl:report_show_chart' state.device.province.id state.device.id state.id %}"><i class="icon-signal"></i></a>
                             <a href="#" onclick="remove('{% url "pbl:state_delete" state.id %}', {{ state.id }});"><i class="icon-trash"></i></a>
                         </td>
                     </tr>

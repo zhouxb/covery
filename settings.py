@@ -259,37 +259,37 @@ BROKER_USER = "guest"
 BROKER_PASSWORD = "guest"
 BROKER_VHOST = "/"
 
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+#CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
-CELERY_QUEUES = {
-    "default": {
-        "binding_key": "task.#",
-    },
-    "crawlers": {
-        "binding_key": "crawler.#",
-    },
-    "pbls": {
-        "binding_key": "pbl.#",
-    },
-}
+#CELERY_QUEUES = {
+    #"default": {
+        #"binding_key": "task.#",
+    #},
+    #"crawlers": {
+        #"binding_key": "crawler.#",
+    #},
+    #"pbls": {
+        #"binding_key": "pbl.#",
+    #},
+#}
 
-CELERY_DEFAULT_QUEUE = "default"
-CELERY_DEFAULT_EXCHANGE = "tasks"
-CELERY_DEFAULT_EXCHANGE_TYPE = "topic"
-CELERY_DEFAULT_ROUTING_KEY = "task.default"
+#CELERY_DEFAULT_QUEUE = "default"
+#CELERY_DEFAULT_EXCHANGE = "tasks"
+#CELERY_DEFAULT_EXCHANGE_TYPE = "topic"
+#CELERY_DEFAULT_ROUTING_KEY = "task.default"
 
-CELERY_ROUTES = {
-    'crawler.tasks.crawl':
-    {
-        'queue': 'crawlers',
-        'routing_key':'crawler.crawl',
-    },
-    'pbl.tasks.probe':
-    {
-        'queue': 'pbls',
-        'routing_key':'pbl.probe',
-    },
-}
+#CELERY_ROUTES = {
+    #'crawler.tasks.crawl':
+    #{
+        #'queue': 'crawlers',
+        #'routing_key':'crawler.crawl',
+    #},
+    #'pbl.tasks.probe':
+    #{
+        #'queue': 'pbls',
+        #'routing_key':'pbl.probe',
+    #},
+#}
 
 # Mail config
 SMTP_HOST = 'corp.chinacache.com'
@@ -297,6 +297,6 @@ SMTP_HOST = 'corp.chinacache.com'
 # Native address
 ip = os.popen("/sbin/ifconfig | grep 'inet addr' | grep -v '127.0.0.1' | awk '{print $2}'").read()
 IP= ip[ip.find(':')+1:ip.find('\n')]
-PORT = 80
+PORT = 8000
 API_ADDRESS = 'http://%s:%s' % (IP, PORT)
 

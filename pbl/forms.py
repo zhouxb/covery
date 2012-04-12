@@ -7,5 +7,5 @@ class StateForm(forms.ModelForm):
 
     class Meta:
         model = State
-        exclude = ('survey', 'date_joined')
+        exclude = ('survey', 'device', 'date_joined')
 

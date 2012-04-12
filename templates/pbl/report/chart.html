@@ -35,15 +35,15 @@
 <script src="{{ STATIC_URL }}js/highcharts.js"></script>
 <script src="{{ STATIC_URL }}js/chart/pbl_state_chart.js"></script>
 <script>
-    $.get("{% url 'pbl:state_show_json' id %}", {'type':'ip'}, function(data){
+    $.get("{% url 'pbl:report_show_chart_json' id %}", {'type':'ip'}, function(data){
         draw_ip_state(data['categories'], data['series'], 'ip_chart_container');
     });
 
-    $.get("{% url 'pbl:state_show_json' id %}", {'type':'domain'}, function(data){
+    $.get("{% url 'pbl:report_show_chart_json' id %}", {'type':'domain'}, function(data){
         draw_domain_state(data['categories'], data['series'], 'domain_chart_container');
     });
 
-    $.get("{% url 'pbl:state_show_json' id %}", {'type':'url'}, function(data){
+    $.get("{% url 'pbl:report_show_chart_json' id %}", {'type':'url'}, function(data){
         draw_url_state(data['categories'], data['series'], 'url_chart_container');
     });
 

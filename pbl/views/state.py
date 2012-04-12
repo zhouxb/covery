@@ -12,8 +12,14 @@ import anyjson
 
 def index(request, province_id, template_name='pbl/state/index.html'):
     province = Province.objects.get(id=province_id)
-    survey = province.survey_set.all()[0]
-    states = State.objects.filter(survey=survey)[:10]
+    devices = province.device_set.all()
+
+    states = []
+    for device in devices:
+        try:
+            states.append(State.objects.filter(device=device)[0])
+        except:
+            pass
 
     return render(request, template_name, {'province':province, 'states':states})
 
@@ -25,14 +31,6 @@ def show(request, province_id, device_id, template_name='pbl/state/show.html'):
 
     return render(request, template_name, {'province':province, 'device':device, 'states':states})
 
-def show_json(request, id):
-    type = request.GET.get('type', '')
-
-    state = State.objects.get(id=id)
-    response = state.build_data(type)
-
-    return json_response(response)
-
 def delete(request, id):
     response = {'result':'failure'}
     try:
@@ -43,6 +41,7 @@ def delete(request, id):
 
     #return HttpResponseRedirect(reverse('pbl:state_index'))
     return json_response(response)
+
 
 @csrf_exempt
 def create(request, id):
@@ -57,12 +56,14 @@ def create(request, id):
 
 @csrf_exempt
 def schedule_create(request):
-    form = StateForm(request.POST)
+    sn = request.POST.get('sn', '')
+    device = Device.objects.get(sn=sn)
 
+    form = StateForm(request.POST)
     status = 'failure'
     if form.is_valid():
         state = form.save(commit=False)
-        state.survey = Survey.objects.all()[0]
+        state.device = device
         state.save()
         status = 'success'
 

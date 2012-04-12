@@ -5,15 +5,16 @@ from django.test.client import Client
 from django.core.urlresolvers import reverse
 import anyjson
 from pbl.models import Survey, State
+from covery.isp.models import Device
 
 class PblTest(TestCase):
-    fixtures = ['survey_testdata.json']
+    fixtures = ['province_testdata.json', 'device_testdata.json', 'survey_testdata.json']
     def setUp(self):
         self.c = Client()
 
     def test_survey_show_on_success(self):
         response = self.c.get(
-                    reverse('pbl:survey_show'),
+                    reverse('pbl:survey_show', args=(1,)),
                 )
 
         result = anyjson.loads(response.content)
@@ -25,10 +26,9 @@ class PblTest(TestCase):
                 }
 
         assert result == expect
-        #self.assertDictEqual(result, expect)
 
     def test_state_create_on_success(self):
-        id = State.objects.create(survey=Survey.objects.all()[0]).id
+        id = State.objects.create(device=Device.objects.get(id=1)).id
         response = self.c.post(
                     reverse('pbl:state_create', args=(id,)),
                         {
@@ -52,6 +52,7 @@ class PblTest(TestCase):
                             'IP_state':'ok',
                             'domain_state':'ok',
                             'URL_state':'ok',
+                            'sn':'sn01',
                             }
                         )
 
@@ -62,3 +63,36 @@ class PblTest(TestCase):
         assert result['status'] == 'success'
         assert state == expect
 
+class StateModelTest(TestCase):
+    fixtures = ['province_testdata.json', 'device_testdata.json', 'state_testdata.json']
+    def setUp(self):
+        self.c = Client()
+
+    def test_build_data_on_success(self):
+        state = State.objects.get(id=1)
+
+        response_ip = state.build_data('ip')
+        response_domain = state.build_data('domain')
+        response_url = state.build_data('url')
+
+        expect_ip = {
+                'series':
+                    [
+                        {'data': [0.050999999999999997], 'name': 'avg'},
+                        {'data': [0.055], 'name': 'max'}
+                    ],
+                'categories': [u'127.0.0.1']
+        }
+
+        expect_domain ={
+                'series': [{'data': [13.157], 'name': 'time'}],
+                'categories': [u'www.baidu.com']
+        }
+        expect_url = {
+                'series': [{'data': [22.420000000000002], 'name': 'time'}], 
+                'categories': [u'http://qq.com']
+        }
+
+        assert response_ip == expect_ip
+        assert response_domain == expect_domain
+        assert response_url == expect_url

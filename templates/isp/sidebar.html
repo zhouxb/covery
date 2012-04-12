@@ -4,10 +4,10 @@
 
 <div class="well sidebar-nav">
   <ul class="nav nav-list">
-    <li id="_isp_province">
+    <li id="_isp">
     <a href="{{ isp_province_index_url }}"> <i class="icon-home"></i> 首页</a>
     </li>
-    <li id="_pbl_isp">
+    <li id="_pbl">
     <a href="{{ pbl_isp_index_url }}"><i class="icon-check"></i> PBL探测</a>
     </li>
   </ul>
@@ -17,15 +17,7 @@
   $(document).ready(function(){
     var pathname = window.location.pathname;
     var path_name = pathname.split("/")
-    var name = "_" + path_name[1] + "_" + path_name[2]
-
-    if(name=="_isp_provinces"){
-        name = "_isp_province"
-    }
-    if(name=="_isp_pbls"){
-        name = "_isp_pbl"
-    }
-
+    var name = "_" + path_name[1]
     $("#" + name).addClass("active");
   })
 </script>

@@ -18,11 +18,11 @@
 
         <div class="span9">
 
-            <h3>{{ province.name }} : {{ device.sn }}</h3>
+            <h3><a href="{% url 'pbl:state_index' province.id %}">{{ province.name }}</a> / {{ device.sn }}</h3>
             <div class="btn-toolbar" style="margin-bottom: 9px">
                 <div class="btn-group">
                     <a id="run_now" href="#" class="btn btn-info" rel="popover" title="提示:" data-content="PBL回源探测任务立刻执行!">
-                        <i class="icon-chevron-down icon-white"></i> Run Now
+                        <i class="icon-chevron-down icon-white"></i> 立刻执行
                     </a>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                         <td><input type='checkbox' id='{{ state.id }}' name='item_id'/></td>
                         <td>{{ state.date_joined|date:"Y-m-d H:i:s" }}</td>
                         <td>
-                            <a href="{% url 'pbl:state_show' state.id %}"><i class="icon-signal"></i></a>
+                            <a href="{% url 'pbl:report_show_chart' state.device.province.id state.device.id state.id %}"><i class="icon-signal"></i></a>
                             <a href="#" onclick="remove('{% url "pbl:state_delete" state.id %}', {{ state.id }});"><i class="icon-trash"></i></a>
                         </td>
                     </tr>
@@ -74,7 +74,7 @@
         $('#run_time').popover()
 
         $('#run_now').click(function(){
-            $.get("{{ pbl_survey_set_run_now}}", function(data){
+            $.get("{% url 'pbl:survey_set_run_now' province.id device.id %}", function(data){
                 imessage(data['message'], data['type']);
             })
         })

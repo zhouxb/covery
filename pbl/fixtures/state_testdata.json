@@ -1,0 +1,13 @@
+[
+    {
+        "pk": 1,
+        "model": "pbl.state",
+        "fields":
+        {
+                "device": 1,
+                "IP_state":"[{\"ip\": \"127.0.0.1\", \"rate\": 0.0, \"avg\": 0.051, \"max\": 0.055}]",
+                "domain_state":"[{\"ips\": [[\"61.135.169.105\", \"CNC\"], [\"61.135.169.125\", \"CNC\"]], \"domain\": \"www.baidu.com\", \"time\": 13.157}]",
+                "URL_state":"[{\"url\": \"http://qq.com\", \"length\": 242.543, \"code\": 200, \"speed\": 22.42}]"
+        }
+    }
+]

@@ -21,7 +21,7 @@ class Survey(models.Model):
     date_joined = models.DateTimeField('添加时间', default=datetime.datetime.now)
 
 class State(models.Model):
-    survey = models.ForeignKey(Survey, null=True)
+    #survey = models.ForeignKey(Survey, null=True)
     device = models.ForeignKey(Device, null=True)
     IP_state = models.TextField('IP探测状态', null=True)
     domain_state = models.TextField('解析探测状态', null=True)
