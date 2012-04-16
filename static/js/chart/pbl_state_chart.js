@@ -1,16 +1,16 @@
 function draw_ip_state(categories, series, container){
-    _draw_state(categories, series, container);
+    _draw_state(categories, series, container, '(ms)');
 }
 
 function draw_domain_state(categories, series, container) {
-    _draw_state(categories, series, container);
+    _draw_state(categories, series, container, '(ms)');
 }
 
 function draw_url_state(categories, series, container){
-    _draw_state(categories, series, container);
+    _draw_state(categories, series, container, '(kb/s)');
 }
 
-function _draw_state(categories, series, container){
+function _draw_state(categories, series, container, y_text){
         var chart;
         chart = new Highcharts.Chart({
             chart: {
@@ -21,12 +21,19 @@ function _draw_state(categories, series, container){
                 text: ''
             },
             xAxis: {
-                categories:categories
+                categories:categories,
+                labels: {
+                    rotation: -45,
+                    align: 'right',
+                    style: {
+                        font: 'normal 13px Verdana, sans-serif'
+                    }
+                }
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: '(s)'
+                    text: y_text
                 }
             },
             legend: {
