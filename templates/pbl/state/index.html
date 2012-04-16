@@ -90,7 +90,7 @@
             form_data = $('#run_time_form').serialize()
             $.ajax({
                 type:"POST",
-                url:"{{ pbl_survey_set_run_time }}",
+                url:"{% url 'pbl:survey_set_run_time' province.id %}",
                 data:form_data,
                 success:function(data){
                     imessage(data['message'], data['type']);

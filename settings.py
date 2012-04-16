@@ -4,7 +4,7 @@ TEMPLATE_PATH = os.path.join(CURRENT_PATH, 'templates')
 
 # Django settings for covery project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
