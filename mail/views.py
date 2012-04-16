@@ -21,7 +21,6 @@ def index(request, template_name='mail/index.html'):
     except (EmptyPage, InvalidPage):
         mails = paginator.page(paginator.num_pages)
 
-    print mails.paginator.page_range[1:3]
     return render(request, template_name, {'mails':mails})
 
 def delete(request, id):
@@ -33,6 +32,10 @@ def delete(request, id):
         pass
 
     return json_response(response)
+
+def show(request, id, template_name='mail/show.html'):
+    mail = Mail.objects.get(id=id)
+    return render(request, template_name, {'message':mail.message})
 
 @csrf_exempt
 def create(request):

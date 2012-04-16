@@ -51,7 +51,7 @@
 
                         <td>{{ mail.date_joined|date:"Y-m-d H:i:s" }}</td>
                         <td>
-                            <a href="#" onclick="show('{{ mail.message }}');"><i class="icon-comment"></i></a>
+                            <a href="#" onclick="show('{% url "mail:show" mail.id %}');"><i class="icon-comment"></i></a>
                             <a href="#" onclick="remove('{% url "mail:delete" mail.id %}', {{ mail.id }});"><i class="icon-trash"></i></a>
                         </td>
                     </tr>
@@ -84,8 +84,8 @@
         });
     }
 
-    function show(message){
-        bootbox.alert(message);
+    function show(url){
+        window.open(url);
     }
 
 </script>
