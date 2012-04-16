@@ -3,6 +3,7 @@
 from django.test import TestCase
 from django.test.client import Client
 from django.core.urlresolvers import reverse
+from mail.models import Mail
 import anyjson
 
 class MailTest(TestCase):
@@ -11,7 +12,6 @@ class MailTest(TestCase):
         self.c = Client()
 
     def test_create_mail_on_success(self):
-        print reverse('mail:create')
         response = self.c.post(
                 reverse('mail:create'),
                 {
@@ -22,5 +22,8 @@ class MailTest(TestCase):
                 }
         )
 
-        result = anyjson.loads(response.content)
-        assert 1 == 1
+        response = anyjson.loads(response.content)
+        mail = Mail.objects.all()[0]
+
+        assert response['result'] == 'success'
+        assert mail.subject == 'alert'

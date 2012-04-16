@@ -1,6 +1,9 @@
+{% load url from future %}
+
 <div class="well sidebar-nav">
   <ul class="nav nav-list">
-    <li id="_account_profile"><a href="/account/profile"><i class="icon-user"></i> 个人信息</a></li>
+    <li id="_account"><a href="/account/profile"><i class="icon-user"></i> 个人信息</a></li>
+    <li id="_mail"><a href="{% url 'mail:index' %}"><i class="icon-envelope"></i> 告警邮件</a></li>
   </ul>
 </div>
 
@@ -8,14 +11,8 @@
   $(document).ready(function(){
     var pathname = window.location.pathname;
     var path_name = pathname.split("/")
+    var name = "_" + path_name[1]
 
-    if(path_name[3]=="" || path_name[3]==undefined){
-      var name = "_" + path_name[1] + "_" + path_name[2]
-      }else{
-      var name = "_" + path_name[1] + "_" + path_name[2] + "_" + path_name[3]
-    }
-
-    if(name=="_account_"){ name = "_account_profile" }
     $("#" + name).addClass("active");
   })
 </script>

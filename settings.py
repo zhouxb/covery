@@ -189,6 +189,7 @@ INSTALLED_APPS = (
     'pbl',
     'mail',
     'isp',
+    'util',
 )
 
 if DEBUG:

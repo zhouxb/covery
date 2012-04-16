@@ -1,18 +1,32 @@
-
+{% load pagination_recipe %}
 <div class="pagination">
     <ul>
         {% if pages.has_previous %}
         <li><a href="?page={{ pages.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+        <li><a href="#">&laquo;</a></li>
         {% endif %}
 
-        {% for number in pages.paginator.page_range %}
-            <li id="page{{number}}"><a href="?page={{ number }}">{{ number }}</a></li>
+        {% if 1 not in pages|page_recipe %}
+        <li><a href="?page=1">1</a></span>
+        <li><a href="#">...</a></li>
+        {% endif %}
+
+        {% for number in pages|page_recipe %}
+        <li id="page{{number}}"><a href="?page={{ number }}">{{ number }}</a></li>
         {% endfor %}
+
+        {% if pages.paginator.num_pages not in pages|page_recipe %}
+        <li><a href="#">...</a></li>
+        <li><a href="?page={{ pages.paginator.num_pages }}">{{ pages.paginator.num_pages }}</a></span>
+        {% endif %}
 
         {% if pages.has_next %}
         <li><a href="?page={{ pages.next_page_number }}">&raquo;</a></li>
+        {% else %}
+        <li><a href="#">&raquo;</a></li>
         {% endif %}
-        </ul>
+    </ul>
 </div>
 
 <script>

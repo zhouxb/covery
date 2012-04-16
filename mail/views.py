@@ -1,15 +1,31 @@
 # -*- coding:utf8 -*-
 
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from contrib.shortcuts import json_response
-from django.conf import settings
+from mail.models import Mail
+from mail.forms import MailForm
+from mail.helpers import send_mail
 
 import anyjson
+
+def index(request, template_name='mail/index.html'):
+    page = int(request.GET.get('page', '1'))
+
+    mails = Mail.objects.all()
+    paginator = Paginator(mails, 1)
+
+    try:
+        mails = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        mails = paginator.page(paginator.num_pages)
+
+    print mails.paginator.page_range[1:3]
+    return render(request, template_name, {'mails':mails})
+
+def delete(request, id):
+    pass
 
 @csrf_exempt
 def create(request):
@@ -18,29 +34,18 @@ def create(request):
     subject = request.POST.get('subject', '')
     message = request.POST.get('message', '')
 
-    send(from_email, recipient_list, subject, message)
+    response = {'result':'success'}
+    try:
+        send_mail(from_email, recipient_list, subject, message)
+    except:
+        response = {'result':'failure'}
 
-    return json_response({'state':'ok'})
+    form = MailForm(request.POST)
+    if form.is_valid():
+        form.save(commit=False)
+        if response['result'] == 'failure':
+            form.is_sended = False
+        form.save()
 
-def send(fromAdd, toAdd, subject, htmlText):
-    strFrom = fromAdd
-    strTo =toAdd
-
-    msgRoot = MIMEMultipart('related')
-    msgRoot['Subject'] = subject
-    msgRoot['From'] = strFrom
-    msgRoot['To'] = ','.join(toAdd)
-    msgRoot.preamble = 'This is a multi-part message in MIME format.'
-
-    msgAlternative = MIMEMultipart('alternative')
-    msgRoot.attach(msgAlternative)
-
-    msgText = MIMEText(htmlText,'html','gb2312')
-    msgAlternative.attach(msgText)
-
-    smtp = smtplib.SMTP('corp.chinacache.com')
-    smtp.set_debuglevel(0)
-
-    smtp.sendmail(strFrom, strTo, msgRoot.as_string())
-    smtp.quit()
+    return json_response(response)
 
