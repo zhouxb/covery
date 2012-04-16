@@ -39,9 +39,7 @@ def delete(request, id):
     except:
         pass
 
-    #return HttpResponseRedirect(reverse('pbl:state_index'))
     return json_response(response)
-
 
 @csrf_exempt
 def create(request, id):

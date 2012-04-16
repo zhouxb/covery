@@ -14,7 +14,7 @@ def index(request, template_name='mail/index.html'):
     page = int(request.GET.get('page', '1'))
 
     mails = Mail.objects.all()
-    paginator = Paginator(mails, 1)
+    paginator = Paginator(mails, 20)
 
     try:
         mails = paginator.page(page)
@@ -25,7 +25,14 @@ def index(request, template_name='mail/index.html'):
     return render(request, template_name, {'mails':mails})
 
 def delete(request, id):
-    pass
+    response = {'result':'failure'}
+    try:
+        Mail.objects.get(id=id).delete()
+        response = {'result':'success'}
+    except:
+        pass
+
+    return json_response(response)
 
 @csrf_exempt
 def create(request):
