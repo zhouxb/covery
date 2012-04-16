@@ -180,7 +180,7 @@ INSTALLED_APPS = (
 
     'south',
     'coffin',
-    'haystack',
+    #'haystack',
     'djcelery',
 
     'account',
