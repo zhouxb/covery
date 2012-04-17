@@ -48,7 +48,7 @@ function _draw_state(categories, series, container, y_text){
             },
             tooltip: {
                 formatter: function() {
-                    return ''+ this.y +' s';
+                    return ''+ this.y + y_text;
                 }
             },
             plotOptions: {

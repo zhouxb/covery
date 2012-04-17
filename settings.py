@@ -4,7 +4,7 @@ TEMPLATE_PATH = os.path.join(CURRENT_PATH, 'templates')
 
 # Django settings for covery project.
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -74,7 +74,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/tmp/static'
+STATIC_ROOT = '/var/www/static'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -296,8 +296,12 @@ BROKER_VHOST = "/"
 SMTP_HOST = 'corp.chinacache.com'
 
 # Native address
-ip = os.popen("/sbin/ifconfig | grep 'inet addr' | grep -v '127.0.0.1' | awk '{print $2}'").read()
-IP= ip[ip.find(':')+1:ip.find('\n')]
-PORT = 8000
+IP = '221.130.162.110'
+PORT = 80
+if DEBUG:
+    ip = os.popen("/sbin/ifconfig | grep 'inet addr' | grep -v '127.0.0.1' | awk '{print $2}'").read()
+    IP= ip[ip.find(':')+1:ip.find('\n')]
+    PORT = 8000
+
 API_ADDRESS = 'http://%s:%s' % (IP, PORT)
 

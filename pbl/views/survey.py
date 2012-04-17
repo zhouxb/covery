@@ -97,17 +97,17 @@ def run_time(request, province_id):
         survey.schedule = '%s' % minute
         survey.save()
 
-        pbl_survey_show_url = '%s/%s' % (
+        pbl_survey_show_url = '%s%s' % (
                 settings.API_ADDRESS,
                 reverse('pbl:survey_show', args=(province.id,))
         )
 
-        pbl_state_schedule_create_url = '%s/%s' % (
+        pbl_state_schedule_create_url = '%s%s' % (
                 settings.API_ADDRESS,
                 reverse('pbl:state_schedule_create')
         )
 
-        mail_create_url = '%s/%s' % (
+        mail_create_url = '%s%s' % (
                 settings.API_ADDRESS,
                 reverse('mail:create')
         )
@@ -120,7 +120,9 @@ def run_time(request, province_id):
                     mail_create_url,
                     minute
                 ],
-            routing_key="pbl.probe.%s" % province.name
+            routing_key="pbl.scheduel.%s" % province.name,
+            exchange=province.name,
+            exchange_type='fanout'
         )
 
         response = {'message':'周期任务已下发', 'type':'success'}
