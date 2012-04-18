@@ -13,65 +13,30 @@ from django.conf import settings
 
 def index(request, province_id, template_name='pbl/survey/index.html'):
     province = Province.objects.get(id=province_id)
-    surveys = province.survey_set.all()
-    return render(request, template_name, {'province':province, 'surveys':surveys})
 
-def new(request, province_id, template_name='pbl/survey/new.html'):
-    province = Province.objects.get(id=province_id)
-    return render(request, template_name, {'province':province})
+    tab_pane = request.GET.get('tab_pane', 'IP')
 
-def create(request, province_id):
-    IP = request.POST.get('IP', '')
-    domain = request.POST.get('domain', '')
-    URL = request.POST.get('URL', '')
-    operator = request.POST.get('operator', '')
+    survey, state = Survey.objects.get_or_create(province=province)
 
-    province = Province.objects.get(id=province_id)
-    survey = Survey()
-    survey.province = province
-
-    try:
-        build_survey(survey, IP, domain, operator, URL)
-        messages.success(request, '添加成功!')
-    except:
-        messages.error(request, '出口策略已经存在')
-
-    return HttpResponseRedirect(reverse('pbl:device_survey_index', args=(province_id,)))
-
-def show(request, province_id, id, template_name='pbl/survey/show.html'):
-    province = Province.objects.get(id=province_id)
-    survey = Survey.objects.get(id=id)
     result = listr_to_textarea(survey)
+    result['tab_pane'] = tab_pane
     result['province'] = province
-    result['survey'] = survey
 
     return render(request, template_name, result)
 
-def update(request, province_id, id):
+def update(request, province_id):
     IP = request.POST.get('IP', '')
     domain = request.POST.get('domain', '')
     URL = request.POST.get('URL', '')
     operator = request.POST.get('operator', '')
 
-    survey = Survey.objects.get(id=id)
-    try:
-        build_survey(survey, IP, domain, operator, URL)
-        messages.success(request, '修改成功!')
-    except:
-        messages.error(request, '修改失败')
+    survey = Survey.objects.get(province=province_id)
+    tab_pane = build_survey(survey, IP, domain, operator, URL)
+    messages.success(request, '修改成功!')
 
-    return HttpResponseRedirect(reverse('pbl:device_survey_index', args=(province_id,)))
+    return HttpResponseRedirect('%s?tab_pane=%s' % (reverse('pbl:survey_index', args=(province_id,)), tab_pane))
 
-def delete(request, province_id, id):
-    try:
-        Survey.objects.get(id=id).delete()
-        response = {'result':'success'}
-    except:
-        response = {'result':'failure'}
-
-    return json_response(response)
-
-def _show(request, province_id):
+def show(request, province_id):
     province = Province.objects.get(id=province_id)
     response = Survey.objects.filter(province=province).values('IP', 'domain', 'operator', 'URL')[0]
     response['IP'] = response['IP'].split('|')
@@ -79,6 +44,16 @@ def _show(request, province_id):
     response['URL'] = response['URL'].split('|')
 
     return json_response(response)
+
+#def set(request, template_name='pbl/survey/set.html'):
+    #survey = Survey.objects.all()[0]
+    #try:
+        #minute = survey.schedule
+        #return render(request, template_name, {'minute':minute})
+    #except:
+        #pass
+
+    #return render(request, template_name)
 
 def run_now(request, province_id, device_id):
     device = Device.objects.get(id=device_id)

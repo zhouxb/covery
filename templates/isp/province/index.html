@@ -29,6 +29,7 @@
             <th width="150">运营商</th>
             <th width="60">设备个数</th>
             <th>设备SN</th>
+            <th>出口策略</th>
             <th width="60">操作</th>
           </tr>
         </thead>
@@ -36,7 +37,7 @@
           {% for province in provinces %}
           <tr id="tr_province_{{province.id}}">
             <td><input type='checkbox' id='{{ province.id }}' name='item_id'/></td>
-            <td><a href="{% url 'isp:device_index' province.id %}">{{ province.name }}</a></td>
+            <td><a href="{% url 'pbl:device_survey_index' province.id %}">{{ province.name }}</a></td>
             <td>{{ province.device_set.count }}</td>
 
             <td id="_{{ province.id }}_devices">
@@ -45,6 +46,13 @@
               {% endfor %}
             </td>
             <td id="_{{ province.id }}_devices_stuff" style="display:none;"></td>
+
+            <td id="_{{ province.id }}_surveys">
+              {% for survey in province.survey_set.all %}
+              <table><tr><td>{{ survey.operator }}</td></tr></table>
+              {% endfor %}
+            </td>
+            <td id="_{{ province.id }}_surveys_stuff" style="display:none;"></td>
 
             <td>
               <a href="#" onclick="folder_toggle({{ province.id }});"><i id="_{{ province.id }}_i" class="icon-folder-open"></i></a>
@@ -81,15 +89,21 @@
     i = $("#_" + province_id + "_i")
     devices = $("#_" + province_id + "_devices")
     devices_stuff = $("#_" + province_id + "_devices_stuff")
+    surveys = $("#_" + province_id + "_surveys")
+    surveys_stuff = $("#_" + province_id + "_surveys_stuff")
 
     if(i.attr("class")=="icon-folder-open"){
       i.attr("class", "icon-folder-close")
       devices.hide();
+      surveys.hide();
       devices_stuff.show();
+      surveys_stuff.show();
     }else{
       i.attr("class", "icon-folder-open")
       devices.show();
+      surveys.show();
       devices_stuff.hide();
+      surveys_stuff.hide();
     }
   }
 

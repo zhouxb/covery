@@ -1,4 +1,8 @@
+# -*- coding:utf8 -*-
+
 import socket
+from pbl.models import Survey, DeviceSurvey
+from covery.isp.models import Device
 
 def _textarea_to_listr(text, check_ip=False):
     text = list(set(filter(lambda x:x!='', map(lambda x:str(x).strip(), text.split('\r\n')))))
@@ -24,29 +28,22 @@ def _is_valid_ipv4_address(address):
 
 def build_survey(survey, IP, domain, operator, URL):
 
-    if IP:
-        IP = _textarea_to_listr(IP, check_ip=True)
-        if survey.IP != IP:
-            survey.IP = IP
-            survey.save()
-        return 'IP'
+    IP = _textarea_to_listr(IP, check_ip=True)
+    if survey.IP != IP:
+        survey.IP = IP
 
-    if domain:
-        domain = _textarea_to_listr(domain)
-        if survey.domain != domain:
-            survey.domain = domain
-        if survey.operator != operator:
-            survey.operator = operator
-        survey.save()
-        return 'domain'
+    domain = _textarea_to_listr(domain)
+    if survey.domain != domain:
+        survey.domain = domain
 
-    if URL:
-        URL = _textarea_to_listr(URL)
-        if survey.URL != URL:
-            survey.URL = URL
-            survey.save()
-        return 'URL'
+    if survey.operator != operator:
+        survey.operator = operator
 
+    URL = _textarea_to_listr(URL)
+    if survey.URL != URL:
+        survey.URL = URL
+
+    survey.save()
 
 def listr_to_textarea(survey):
     IP = survey.IP.replace('|', '\r\n')
@@ -55,6 +52,36 @@ def listr_to_textarea(survey):
     URL = survey.URL.replace('|', '\r\n')
 
     return {'IP':IP, 'domain':domain, 'operator':operator, 'URL':URL}
+
+def build_device_survey(province):
+    surveys = province.survey_set.all()
+
+    know_devices = []
+    result = []
+    for survey in surveys:
+        survey_device = {}
+        survey_device['survey'] = survey
+
+        device_ids = survey.devicesurvey_set.all().values_list('device', flat=True)
+        survey_device['devices'] = Device.objects.filter(id__in = device_ids)
+
+        result.append(survey_device)
+        know_devices += device_ids
+    result.append(_build_unknow_devices(province, know_devices))
+
+    return result
+
+def _build_unknow_devices(province, know_devices):
+    survey_device = {}
+    survey_device['survey'] = {'operator':'Unknow'}
+
+    all_devices = province.device_set.all().values_list('id', flat=True)
+    unknow_device_ids = list(set(all_devices) - set(know_devices))
+
+    devices = Device.objects.filter(id__in = unknow_device_ids)
+    survey_device['devices'] = devices
+
+    return survey_device
 
 MINUTE = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14',
 '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27',

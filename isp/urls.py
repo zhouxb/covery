@@ -10,8 +10,8 @@ urlpatterns = patterns('isp.views.province',
 
 urlpatterns += patterns('isp.views.device',
     url(r'^province/(?P<province_id>\d+)/devices$', 'index', name='device_index'),
-    url(r'^province/(?P<province_id>\d+)/create$', 'create', name='device_create'),
+    url(r'^province/(?P<province_id>\d+)/device/create$', 'create', name='device_create'),
     url(r'^province/(?P<province_id>\d+)/device/(?P<id>\d+)/delete$', 'delete', name='device_delete'),
-    url(r'^province/(?P<province_id>\d+)/show$', 'show', name='device_show'),
+    url(r'^province/(?P<province_id>\d+)/device/show$', 'show', name='device_show'),
 )
 

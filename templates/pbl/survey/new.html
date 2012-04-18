@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+{% include "nav.html" %}
+{% endblock %}
+
+{% block content %}
+{% load url from future %}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+        {% include "isp/sidebar.html" %}
+        </div>
+
+        <div class="span9">
+            <form class="form-horizontal" action="{% url 'pbl:survey_create' province.id %}" method="post">
+                {% csrf_token %}
+                <legend><a href="{% url 'pbl:device_survey_index' province.id %}">{{ province.name }}</a> : 添加新的探测出口策略</legend>
+                <fieldset>
+                    <div class="control-group">
+                        <label class="control-label" for="select01">出口</label>
+                        <div class="controls">
+                            <select id="operator" name="operator">
+                                <option id="CT" value="CT">中国电信</option>
+                                <option id="CNC" value="CNC">中国网通</option>
+                                <option id="CMCC" value="CMCC">中国移动</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="textarea">IP:</label>
+                        <div class="controls">
+                            <textarea class="input-xlarge" id="textarea" rows="7" name="IP">{{ IP }}</textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="textarea">域名:</label>
+                        <div class="controls">
+                            <textarea class="input-xlarge" id="textarea" rows="7" name="domain">{{ domain }}</textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="textarea">URL:</label>
+                        <div class="controls">
+                            <textarea class="input-xlarge" id="textarea" rows="7" name="URL">{{ URL }}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+</script>
+
+{% endblock %}
+
