@@ -6,88 +6,61 @@
 {% endblock %}
 
 {% block content %}
+{% load url from future %}
 
-{% for survey_device in survey_devices %}
-<div id="{{ survey_device.survey.operator }}" class="span3 well">
-    <h3>{{ survey_device.survey.operator }}</h3>
-    {% for device in survey_device.devices %}
-    <li name="device_li"><div class="alert alert-info" id="card1">{{ device.sn }}</div></li>
-    {% endfor %}
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3">
+      {% include "isp/sidebar.html" %}
+    </div>
+    <div class="span9">
+      <h3><a href="{% url 'pbl:device_survey_index' province.id %}">{{ province.name }}</a></h3>
+
+      {% for survey_device in survey_devices %}
+      <div id="{{ survey_device.survey.operator }}" class="span3 well">
+        <h3>{{ survey_device.survey.operator }}</h3>
+        {% for device in survey_device.devices %}
+        <li name="device_li"><div class="alert alert-info" value="{{ device.id }}">{{ device.sn }}</div></li>
+        {% endfor %}
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
 </div>
-{% endfor %}
-
-<div id="gallery" class="span3 well">
-    <h3>gallery</h3>
-    <li class="ui-widget-content ui-corner-tr">
-    <div class="alert alert-info" id="card1">1</div>
-    </li>
-    <li class="ui-widget-content ui-corner-tr">
-    <div class="alert alert-info">2</div>
-    </li>
-</div>
-
-<div id="trash" class="span3 well"><h3>trash</h3></div>
 
 <script src="{{ STATIC_URL }}js/jquery-ui-1.8.19.custom.min.js"></script>
 <script>
-    $(function() {
-        {% for survey_device in survey_devices %}
-            $operator= $("#{{ survey_device.survey.operator }}")
-            $( "li", $operator ).draggable({
-                revert: true,
-                cursor: "move"
-            });
-
-            $operator.droppable({
-                accept: "li[name='device_li']",
-                drop: function( event, ui ) {
-                    $p = $(this)
-                    $item = ui.draggable;
-                    $item.fadeOut(function() {
-                        $item.appendTo($p).fadeIn(function(){});
-                    });
-                }
-            });
-
-        {% endfor %}
+  $(function() {
+    {% for survey_device in survey_devices %}
+    $operator= $("#{{ survey_device.survey.operator }}")
+    $operator.data("survey_id", "{{ survey_device.survey.id }}")
+    $( "li", $operator ).draggable({
+      revert: true,
+      cursor: "move"
     });
-    $(function() {
 
-        $gallery = $("#gallery"),
-        $trash = $("#trash");
+    $operator.droppable({
+      accept: "li[name='device_li']",
+      drop: function( event, ui ) {
+        $p = $(this)
+        $item = ui.draggable;
+        survey_id = $p.data('survey_id')
+        device_id = $('div',$item).attr("value")
 
-        $( "li", $gallery ).draggable({
-            revert: true,
-            cursor: "move"
-        });
-
-        $trash.droppable({
-            accept: "#gallery > li",
-            drop: function( event, ui ) {
-                deleteImage( ui.draggable );
+        $item.fadeOut(function() {
+          $.post("{% url 'pbl:device_survey_update_json' province.id %}", {survey_id:survey_id, device_id:device_id},
+          function(data){
+            if(data["result"]=="success"){
+              $item.appendTo($p).fadeIn(function(){});
             }
+          });
         });
-
-        $gallery.droppable({
-            accept: "#trash > li",
-            drop: function( event, ui ) {
-                recycleImage( ui.draggable );
-            }
-        });
-
-        function deleteImage($item) {
-            $item.fadeOut(function() {
-                $item.appendTo($trash).fadeIn(function(){});
-            });
-        }
-
-        function recycleImage($item) {
-            $item.fadeOut(function() {
-                $item.appendTo($gallery).fadeIn();
-            });
-        }
-
+      }
     });
+
+    {% endfor %}
+  });
 
 </script>
 

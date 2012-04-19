@@ -13,7 +13,6 @@ import anyjson
 def index(request, province_id, template_name='pbl/state/index.html'):
     province = Province.objects.get(id=province_id)
     devices = province.device_set.all()
-    minute = province.survey_set.all()[0].schedule
 
     states = []
     for device in devices:
@@ -22,7 +21,7 @@ def index(request, province_id, template_name='pbl/state/index.html'):
         except:
             pass
 
-    return render(request, template_name, {'province':province, 'states':states, 'minute':minute})
+    return render(request, template_name, {'province':province, 'states':states})
 
 def show(request, province_id, device_id, template_name='pbl/state/show.html'):
     province = Province.objects.get(id=province_id)

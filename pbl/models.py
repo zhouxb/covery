@@ -17,18 +17,17 @@ class Survey(models.Model):
     IP = models.TextField('IP列表')
     domain = models.TextField('域名列表')
     URL = models.TextField('URL列表')
-    schedule = models.CharField('周期', max_length=5, null=True)
     date_joined = models.DateTimeField('添加时间', default=datetime.datetime.now)
 
     class Meta:
         unique_together = (('province', 'operator'),)
 
 class DeviceSurvey(models.Model):
-    device = models.ForeignKey(Device, null=True)
+    device = models.ForeignKey(Device, null=True, unique=True)
     survey = models.ForeignKey(Survey, null=True)
 
-    class Meta:
-        unique_together = (('device', 'survey'),)
+    #class Meta:
+        #unique_together = (('device', 'survey'),)
 
 class State(models.Model):
     #survey = models.ForeignKey(Survey, null=True)

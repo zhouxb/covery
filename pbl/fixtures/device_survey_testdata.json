@@ -1,0 +1,11 @@
+[
+    {
+        "pk": 1,
+        "model": "pbl.devicesurvey",
+        "fields":
+            {
+                "device":1,
+                "survey":1
+            }
+    }
+]

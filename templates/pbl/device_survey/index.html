@@ -17,6 +17,15 @@
         <div class="span9">
 
             <h3>{{ province.name }}</h3>
+            <form id="run_time_form" class="well form-inline">
+                {% csrf_token %}
+                <label class="control-label"> minute: </label>
+                <input id="minute" name="minute" type="text" class="input-small" placeholder="每隔多少分钟" value="{{ minute }}">
+                <button id="run_time" type="submit" class="btn btn-info" rel="popover"
+                    title="提示:" data-content="PBL回源探测任务周期执行<br/>每隔多少分钟: 必须为1~59<br/>">
+                    <i class="icon-refresh icon-white"></i> 周期执行
+                </button>
+            </form>
             <div class="btn-toolbar" style="margin-bottom: 1px">
                 <div class="btn-group">
                     <a class="btn btn-primary" href="{% url 'pbl:device_survey_update' province.id %}"><i class="icon-cog icon-white"></i> 设置设备出口策略</a>
@@ -73,6 +82,31 @@
             _i.attr("class", "icon-eye-close")
         }
     }
+
+    $(document).ready(function(){
+        $('#run_now').popover()
+        $('#run_time').popover()
+
+        $('#run_now').click(function(){
+            $.get("{{ pbl_survey_set_run_now}}", function(data){
+                imessage(data['message'], data['type']);
+            })
+        })
+
+        $('#run_time_form').submit(function(e){
+            e.preventDefault();
+            form_data = $('#run_time_form').serialize()
+            $.ajax({
+                type:"POST",
+                url:"{% url 'pbl:survey_set_run_time' province.id %}",
+                data:form_data,
+                success:function(data){
+                    imessage(data['message'], data['type']);
+                }
+            });
+        })
+
+    })
 
 </script>
 

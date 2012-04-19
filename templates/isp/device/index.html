@@ -18,7 +18,7 @@
             <td></td>
             <td>{{ device.name }}</td>
             <td>{{ device.sn }}</td>
-            <td><a href="#" onclick="_deivece_remove('{% url "isp:device_delete" province.id device.id %}', {{ device.id }});"><i class="icon-trash"></i></a></td>
+            <td><a href="#" onclick="_device_remove('{% url "isp:device_delete" province.id device.id %}', {{ device.id }});"><i class="icon-trash"></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

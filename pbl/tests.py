@@ -8,13 +8,14 @@ from pbl.models import Survey, State
 from covery.isp.models import Device
 
 class PblTest(TestCase):
-    fixtures = ['province_testdata.json', 'device_testdata.json', 'survey_testdata.json']
+    fixtures = ['province_testdata.json', 'device_testdata.json', 'survey_testdata.json', 'device_survey_testdata']
     def setUp(self):
         self.c = Client()
 
     def test_survey_show_on_success(self):
         response = self.c.get(
-                    reverse('pbl:survey_show', args=(1,)),
+                    reverse('pbl:survey_show_json', args=(1,)),
+                    {'sn':'sn01'}
                 )
 
         result = anyjson.loads(response.content)

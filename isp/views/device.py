@@ -30,7 +30,7 @@ def create(request, province_id):
     except IntegrityError, e:
         messages.error(request, '添加失败,设备sn重复!')
 
-    return HttpResponseRedirect(reverse('isp:device_index', args=(province_id,)))
+    return HttpResponseRedirect(reverse('pbl:device_survey_index', args=(province_id,)))
 
 def show(request, province_id, id):
     pass

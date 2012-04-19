@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from covery.isp.models import Province, Device
-from pbl.models import Survey, State
+from pbl.models import Survey, State, DeviceSurvey
 from pbl.helpers import listr_to_textarea, build_survey, MINUTE, HOUR
 from plugins.pbl import tasks
 from django.conf import settings
@@ -71,12 +71,18 @@ def delete(request, province_id, id):
 
     return json_response(response)
 
-def _show(request, province_id):
-    province = Province.objects.get(id=province_id)
-    response = Survey.objects.filter(province=province).values('IP', 'domain', 'operator', 'URL')[0]
-    response['IP'] = response['IP'].split('|')
-    response['domain'] = response['domain'].split('|')
-    response['URL'] = response['URL'].split('|')
+# 下任务接口
+def show_json(request, province_id):
+    sn = request.GET.get('sn', '')
+    device = Device.objects.get(sn=sn)
+    device_survey = DeviceSurvey.objects.get(device=device)
+    survey = device_survey.survey
+
+    response = {}
+    response['operator'] = survey.operator
+    response['IP'] = survey.IP.split('|')
+    response['domain'] = survey.domain.split('|')
+    response['URL'] = survey.URL.split('|')
 
     return json_response(response)
 
@@ -84,9 +90,10 @@ def run_now(request, province_id, device_id):
     device = Device.objects.get(id=device_id)
     state = State.objects.create(device=device)
 
-    pbl_survey_show_url = '%s%s' % (
+    pbl_survey_show_url = '%s%s?sn=%s' % (
             settings.API_ADDRESS,
-            reverse('pbl:survey_show', args=(province_id,))
+            reverse('pbl:survey_show_json', args=(province_id,)),
+            device.sn
     )
 
     pbl_state_create_url = '%s%s' % (
@@ -118,13 +125,12 @@ def run_time(request, province_id):
 
     if minute in MINUTE:
         province = Province.objects.get(id=province_id)
-        survey = Survey.objects.get(province=province)
-        survey.schedule = '%s' % minute
-        survey.save()
+        province.schedule = '%s' % minute
+        province.save()
 
         pbl_survey_show_url = '%s%s' % (
                 settings.API_ADDRESS,
-                reverse('pbl:survey_show', args=(province.id,))
+                reverse('pbl:survey_show_json', args=(province.id,))
         )
 
         pbl_state_schedule_create_url = '%s%s' % (
@@ -136,6 +142,10 @@ def run_time(request, province_id):
                 settings.API_ADDRESS,
                 reverse('mail:create')
         )
+
+        print pbl_survey_show_url
+        print pbl_state_schedule_create_url
+        print mail_create_url
 
         tasks.schedule.apply_async(
             args=
