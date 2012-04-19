@@ -32,6 +32,7 @@ class DeviceSurvey(models.Model):
 class State(models.Model):
     #survey = models.ForeignKey(Survey, null=True)
     device = models.ForeignKey(Device, null=True)
+    operator = models.CharField('出口策略', max_length=200, null=True)
     IP_state = models.TextField('IP探测状态', null=True)
     domain_state = models.TextField('解析探测状态', null=True)
     URL_state = models.TextField('URL探测状态', null=True)

@@ -33,7 +33,7 @@
                     <tr id="tr_state_{{state.id}}">
                         <td><input type='checkbox' id='{{ state.id }}' name='item_id'/></td>
                         <td><a href="{% url 'pbl:state_show' state.device.province.id state.device.id %}">{{ state.device.sn }}</a></td>
-                        <td>{{ state.device|operator }}</td>
+                        <td>{{ state.operator }}</td>
                         <td>{{ state.date_joined|date:"Y-m-d H:i:s" }}</td>
                         <td>
                             <a href="{% url 'pbl:report_show_chart' state.device.province.id state.device.id state.id %}"><i class="icon-signal"></i></a>

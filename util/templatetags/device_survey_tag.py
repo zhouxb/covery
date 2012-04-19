@@ -5,9 +5,12 @@ from django import template
 register = template.Library()
 
 def operator(device):
-    survey = device.devicesurvey_set.all()[0].survey
+    try:
+        survey = device.devicesurvey_set.all()[0].survey
 
-    return survey.operator
+        return survey.operator
+    except:
+        return 'Unknow'
 
 register.filter('operator', operator)
 

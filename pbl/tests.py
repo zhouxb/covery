@@ -36,12 +36,13 @@ class PblTest(TestCase):
                             'IP_state':'ok',
                             'domain_state':'ok',
                             'URL_state':'ok',
+                            'operator':'CT'
                         }
                     )
 
         result = anyjson.loads(response.content)
-        state = State.objects.values('IP_state', 'domain_state', 'URL_state')[0]
-        expect = {'domain_state': u'ok', 'URL_state': u'ok', 'IP_state': u'ok'}
+        state = State.objects.values('IP_state', 'domain_state', 'URL_state', 'operator')[0]
+        expect = {'domain_state': u'ok', 'URL_state': u'ok', 'IP_state': u'ok', 'operator':u'CT'}
 
         assert result['status'] == 'success'
         assert state == expect
@@ -54,12 +55,13 @@ class PblTest(TestCase):
                             'domain_state':'ok',
                             'URL_state':'ok',
                             'sn':'sn01',
+                            'operator':'CT'
                             }
                         )
 
         result = anyjson.loads(response.content)
-        state = State.objects.values('IP_state', 'domain_state', 'URL_state')[0]
-        expect = {'domain_state': u'ok', 'URL_state': u'ok', 'IP_state': u'ok'}
+        state = State.objects.values('IP_state', 'domain_state', 'URL_state', 'operator')[0]
+        expect = {'domain_state': u'ok', 'URL_state': u'ok', 'IP_state': u'ok', 'operator':u'CT'}
 
         assert result['status'] == 'success'
         assert state == expect

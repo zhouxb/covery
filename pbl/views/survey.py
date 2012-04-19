@@ -88,7 +88,12 @@ def show_json(request, province_id):
 
 def run_now(request, province_id, device_id):
     device = Device.objects.get(id=device_id)
-    state = State.objects.create(device=device)
+
+    try:
+        device_survey = DeviceSurvey.objects.get(device=device)
+        state = State.objects.create(device=device, operator=device_survey.survey.operator)
+    except:
+        return json_response({'message':'该设备没有指定出口策略,任务下发失败', 'type':'error'})
 
     pbl_survey_show_url = '%s%s?sn=%s' % (
             settings.API_ADDRESS,

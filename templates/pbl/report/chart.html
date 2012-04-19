@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block content %}
-{% load device_survey_tag %}
 {% load url from future %}
 
 <div class="container-fluid">
@@ -19,7 +18,7 @@
             <h3>
                 <a href="{% url 'pbl:state_index' province.id %}">{{ province.name }}</a>
                 :
-                {{ device|operator }} -
+                {{ state.operator }} -
                 <a href="{% url 'pbl:state_show' province.id device.id %}"> {{ device.sn }} </a>
                 <small>{{ state.date_joined|date:"Y-m-d H:i:s" }}</small>
             </h3>

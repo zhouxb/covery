@@ -17,7 +17,7 @@
       <h3><a href="{% url 'pbl:device_survey_index' province.id %}">{{ province.name }}</a></h3>
 
       {% for survey_device in survey_devices %}
-      <div id="{{ survey_device.survey.operator }}" class="span3 well">
+      <div id="{{ survey_device.survey.operator }}" class="span2 well">
         <h3>{{ survey_device.survey.operator }}</h3>
         {% for device in survey_device.devices %}
         <li name="device_li"><div class="alert alert-info" value="{{ device.id }}">{{ device.sn }}</div></li>
