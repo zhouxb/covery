@@ -6,8 +6,8 @@
 
 {% block content %}
 
+{% load device_survey_tag %}
 {% load url from future %}
-{% url 'pbl:survey_set_run_now' as pbl_survey_set_run_now %}
 {% url 'pbl:survey_set_run_time' as pbl_survey_set_run_time %}
 
 <div class="container-fluid">
@@ -18,7 +18,7 @@
 
         <div class="span9">
 
-            <h3><a href="{% url 'pbl:state_index' province.id %}">{{ province.name }}</a> / {{ device.sn }}</h3>
+            <h3><a href="{% url 'pbl:state_index' province.id %}">{{ province.name }}</a> / {{ device.sn }} - {{ device|operator }}</h3>
             <div class="btn-toolbar" style="margin-bottom: 9px">
                 <div class="btn-group">
                     <a id="run_now" href="#" class="btn btn-info" rel="popover" title="提示:" data-content="PBL回源探测任务立刻执行!">

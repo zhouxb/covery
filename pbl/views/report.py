@@ -14,8 +14,9 @@ import anyjson
 def show_chart(request, province_id, device_id, id, template_name='pbl/report/chart.html'):
     province = Province.objects.get(id=province_id)
     device = Device.objects.get(id=device_id)
+    state = State.objects.get(id=id)
 
-    return render(request, template_name, {'province':province, 'device':device, 'id':id})
+    return render(request, template_name, {'province':province, 'device':device, 'state':state, 'id':id})
 
 def show_chart_json(request, id):
     type = request.GET.get('type', '')

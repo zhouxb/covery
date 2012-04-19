@@ -33,7 +33,7 @@
         <tbody id="province_tbody">
           {% for device in devices %}
           <tr>
-            <td><a href="{% url 'isp:device_index' device.province.id %}">{{ device.province.name }}</a></td>
+            <td><a href="{% url 'pbl:device_survey_index' device.province.id %}">{{ device.province.name }}</a></td>
             <td>{{ device.name }}</td>
             <td>{{ device.sn }}</td>
           </tr>
