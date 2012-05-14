@@ -12,7 +12,7 @@ import anyjson
 
 
 @task(max_retries=2, queue='crawlers', routing_key='crawler.crawl', name='crawler.tasks.crawl')
-def crawl(id, hostname, scrapyd_url='http://localhost:6800/schedule.json'):
+def crawl(id, hostname, scrapyd_url='http://123.125.156.122:6800/schedule.json'):
     #logger = crawl.get_logger()
     #logger.info('crawl')
 

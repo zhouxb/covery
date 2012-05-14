@@ -34,7 +34,6 @@ def index(request, template_name='crawler/index.html'):
 
 def create(request):
     form = CrawlerForm(request.POST)
-    task = TaskMeta.objects.all()[1]
 
     if form.is_valid():
         crawler = form.save(commit=False)
