@@ -14,7 +14,7 @@
         <tr>
             <td>{{ domain.name }}</td>
             <td>{{ domain.port }}</td>
-            <td>{{ domain.date_joined }}</td>
+            <td>{{ domain.date_joined|date:"Y-m-d H:i:s" }}</td>
         </tr>
         {% endfor %}
     </tbody>

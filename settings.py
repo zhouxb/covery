@@ -305,3 +305,4 @@ if DEBUG:
 
 API_ADDRESS = 'http://%s:%s' % (IP, PORT)
 
+SCRAPYD_URL = 'http://123.125.156.122:6800/schedule.json'

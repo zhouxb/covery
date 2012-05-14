@@ -14,7 +14,8 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from djcelery.models import TaskMeta
 from crawler.models import Crawler
 from crawler.forms import CrawlerForm
-from crawler import tasks
+from crawler.helpers import crawl
+from django.conf import settings
 
 def index(request, template_name='crawler/index.html'):
     page = int(request.GET.get('page', '1'))
@@ -47,9 +48,10 @@ def create(request):
 
 def run(request, id):
     crawler = Crawler.objects.get(id=id)
-    if not crawler.task_id:
-        task_id = tasks.crawl.apply_async(args=[id, 'http://localhost:8000']).task_id
-        crawler.task_id = task_id
+    if not crawler.status:
+        #task_id = tasks.crawl.apply_async(args=[id, 'http://localhost:8000']).task_id
+        #crawler.task_id = task_id
+        crawl(id, settings.API_ADDRESS)
         crawler.status = 'INIT:init'
         crawler.save()
 

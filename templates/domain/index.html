@@ -29,7 +29,7 @@
                         <td><input type='checkbox' id='{{crawler.id}}' name='item_id'/></td>
                         <td>{{ domain.name }}</td>
                         <td>{{ domain.port }}</td>
-                        <td>{{ domain.date_joined }}</td>
+                        <td>{{ domain.date_joined|date:"Y-m-d H:i:s" }}</td>
                         <td>
                         </td>
                     </tr>

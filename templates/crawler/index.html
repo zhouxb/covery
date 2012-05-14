@@ -34,13 +34,12 @@
                         <td>{{ crawler.allowed_domain }}</td>
                         <td>{{ crawler.start_url }}</td>
                         <td>{{ crawler.depth_limit }}</td>
-                        <td>{{ crawler.date_joined }}</td>
+                        <td>{{ crawler.date_joined|date:"Y-m-d H:i:s" }}</td>
                         <td id="opertion_{{ crawler.id }}">
-                            {% if crawler.task_id or crawler.periodic_task_id %}
+                            {% if crawler.status %}
                             <a href="{% url 'crawler:show' crawler.id%}"><i class='icon-eye-open'></i></a>
                             {% else %}
                             <a href="#" onclick="run('{% url 'crawler:run' crawler.id %}', '{% url 'crawler:show' crawler.id %}');"><i class="icon-share-alt"></i></a>
-                            <a href="{% url 'crawler:show' crawler.id %}"><i class="icon-time"></i></a>
                             <a href="#" onclick="remove('{% url 'crawler:delete' crawler.id %}');"><i class="icon-trash"></i></a>
                             {% endif %}
                         </td>

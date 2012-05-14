@@ -5,8 +5,8 @@ from django.db import models
 
 class Crawler(models.Model):
 
-    task_id = models.CharField('task id', max_length=255, unique=True, null=True)
-    periodic_task_id = models.IntegerField('periodic_task_id', unique=True, null=True)
+    #task_id = models.CharField('task id', max_length=255, unique=True, null=True)
+    #periodic_task_id = models.IntegerField('periodic_task_id', unique=True, null=True)
     jobid = models.CharField('jobid', max_length=255, unique=True, null=True)
     name = models.CharField('任务名称', max_length=30, unique=True, help_text='任务名称必须唯一')
     allowed_domain = models.CharField('检测域名', max_length=200, help_text='爬取时要检测的域名')
